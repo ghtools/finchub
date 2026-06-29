@@ -51,7 +51,6 @@
   footer{text-align:center;padding:28px 20px;color:var(--muted);font-size:0.76rem;border-top:1px solid var(--border);margin-top:10px}
   footer a{color:var(--accent);text-decoration:none}
 </style>
- <meta name="google-site-verification" content="K1pNedzz1cI2tNwroCIRkMxSK6aYFFc2sizUkvQ5twQ" />
 </head>
 <body>
 <nav>
@@ -616,6 +615,62 @@ function shareResult(type){
   if(navigator.share){navigator.share({title:'FinchHub',text,url:'https://finchub.vercel.app'});}
   else{navigator.clipboard.writeText(text).then(()=>alert('Copied! Share anywhere 🚀'));}
 }
+</script>
+
+<!-- Adsterra Social Bar - shows on all pages -->
+<script src="https://pl30126690.effectivecpmnetwork.com/81/6e/c5/816ec5661a3fd25d427f594b8a6c1210.js"></script>
+
+<!-- Adsterra Ad Styles -->
+<style>
+.ad-container{text-align:center;margin:12px auto;max-width:520px;padding:0 16px}
+.ad-label{font-size:0.65rem;color:#7a7f8e;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.ad-mobile{display:block}
+.ad-desktop{display:none}
+@media(min-width:600px){.ad-mobile{display:none}.ad-desktop{display:block}}
+</style>
+
+<!-- Adsterra Native Banner - after hero -->
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  // Insert native banner after hero section
+  var hero=document.querySelector('.hero');
+  if(hero){
+    var nb=document.createElement('div');
+    nb.className='ad-container';
+    nb.innerHTML='<div class="ad-label">Advertisement</div><script async="async" data-cfasync="false" src="https://pl30126685.effectivecpmnetwork.com/1b947a615e626a8182392ba72cd86e5a/invoke.js"><\/script><div id="container-1b947a615e626a8182392ba72cd86e5a"></div>';
+    hero.parentNode.insertBefore(nb,hero.nextSibling);
+  }
+
+  // Insert mobile banner (320x50) before footer
+  var footer=document.querySelector('footer');
+  if(footer){
+    var mb=document.createElement('div');
+    mb.className='ad-container ad-mobile';
+    mb.innerHTML='<div class="ad-label">Advertisement</div><script>atOptions={"key":"ae14987a4c1078fa2aa4089f71f57cd6","format":"iframe","height":50,"width":320,"params":{}}<\/script><script src="https://www.highperformanceformat.com/ae14987a4c1078fa2aa4089f71f57cd6/invoke.js"><\/script>';
+    footer.parentNode.insertBefore(mb,footer);
+
+    // Insert desktop banner (728x90) before footer - desktop only
+    var db=document.createElement('div');
+    db.className='ad-container ad-desktop';
+    db.innerHTML='<div class="ad-label">Advertisement</div><script>atOptions={"key":"de09daf09be38c92bf2756f86c4cb0fc","format":"iframe","height":90,"width":728,"params":{}}<\/script><script src="https://www.highperformanceformat.com/de09daf09be38c92bf2756f86c4cb0fc/invoke.js"><\/script>';
+    footer.parentNode.insertBefore(db,footer);
+  }
+
+  // Insert 300x250 banner inside result sections (after each result shows)
+  var observer=new MutationObserver(function(mutations){
+    mutations.forEach(function(m){
+      if(m.target.classList.contains('show') && !m.target.querySelector('.ad-injected')){
+        var ad=document.createElement('div');
+        ad.className='ad-container ad-injected';
+        ad.innerHTML='<div class="ad-label">Advertisement</div><script>atOptions={"key":"e78aab0881fcbf7ced0fc087bb543afb","format":"iframe","height":250,"width":300,"params":{}}<\/script><script src="https://www.highperformanceformat.com/e78aab0881fcbf7ced0fc087bb543afb/invoke.js"><\/script>';
+        m.target.appendChild(ad);
+      }
+    });
+  });
+  document.querySelectorAll('.result').forEach(function(r){
+    observer.observe(r,{attributes:true,attributeFilter:['class']});
+  });
+});
 </script>
 </body>
 </html>
