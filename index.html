@@ -4,390 +4,132 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FinchHub – Free Financial Calculators</title>
-<meta name="description" content="Free financial calculators for EMI, Salary Check & Freelance Rate. Available in SAR & USD. Perfect for Gulf & international users.">
+<meta name="description" content="Free financial calculators for EMI, Salary Check & Freelance Rate. Supports 30+ countries worldwide.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0d0f14;
-    --surface: #161920;
-    --border: #242830;
-    --accent: #4f8ef7;
-    --accent2: #22d3a5;
-    --accent3: #f7924f;
-    --text: #e8eaf0;
-    --muted: #7a7f8e;
-    --radius: 16px;
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-  }
-
-  /* NAV */
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 24px;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: rgba(13,15,20,0.92);
-    backdrop-filter: blur(12px);
-    z-index: 100;
-  }
-  .logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: -0.5px;
-  }
-  .logo span { color: var(--text); }
-
-  /* CURRENCY TOGGLE */
-  .currency-toggle {
-    display: flex;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 4px;
-    gap: 4px;
-  }
-  .currency-toggle button {
-    border: none;
-    background: transparent;
-    color: var(--muted);
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 6px 14px;
-    border-radius: 100px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .currency-toggle button.active {
-    background: var(--accent);
-    color: #fff;
-  }
-
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 52px 24px 36px;
-  }
-  .hero-badge {
-    display: inline-block;
-    background: rgba(79,142,247,0.12);
-    color: var(--accent);
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 6px 14px;
-    border-radius: 100px;
-    margin-bottom: 18px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-  .hero h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.8rem, 6vw, 3rem);
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 14px;
-    letter-spacing: -1px;
-  }
-  .hero h1 em {
-    font-style: normal;
-    color: var(--accent);
-  }
-  .hero p {
-    color: var(--muted);
-    font-size: 1rem;
-    max-width: 420px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  /* TABS */
-  .tabs {
-    display: flex;
-    gap: 8px;
-    padding: 0 16px;
-    margin-bottom: 28px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    justify-content: center;
-  }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab-btn {
-    flex-shrink: 0;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--muted);
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 100px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .tab-btn.active {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
-  .tab-btn .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: currentColor;
-    opacity: 0.6;
-  }
-
-  /* CARD */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px 24px;
-    max-width: 520px;
-    margin: 0 auto 32px;
-  }
-  .card-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-  }
-  .card-sub {
-    color: var(--muted);
-    font-size: 0.83rem;
-    margin-bottom: 24px;
-    line-height: 1.5;
-  }
-
-  /* FORM */
-  .field { margin-bottom: 16px; }
-  .field label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--muted);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-  }
-  .field input, .field select {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text);
-    font-size: 1rem;
-    font-family: 'Inter', sans-serif;
-    padding: 12px 14px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .field input:focus, .field select:focus {
-    border-color: var(--accent);
-  }
-  .field select option { background: var(--bg); }
-
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-  /* BUTTON */
-  .calc-btn {
-    width: 100%;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 700;
-    font-family: 'Inter', sans-serif;
-    padding: 14px;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: opacity 0.2s, transform 0.1s;
-  }
-  .calc-btn:active { transform: scale(0.98); opacity: 0.9; }
-
-  /* RESULT */
-  .result {
-    margin-top: 20px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    display: none;
-  }
-  .result.show { display: block; }
-  .result-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-bottom: 16px;
-  }
-  .result-item { }
-  .result-item .rl {
-    font-size: 0.72rem;
-    color: var(--muted);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    margin-bottom: 4px;
-  }
-  .result-item .rv {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--accent);
-  }
-  .result-item .rv.green { color: var(--accent2); }
-  .result-item .rv.orange { color: var(--accent3); }
-
-  .verdict {
-    background: rgba(79,142,247,0.08);
-    border: 1px solid rgba(79,142,247,0.2);
-    border-radius: 10px;
-    padding: 14px 16px;
-    font-size: 0.9rem;
-    line-height: 1.55;
-    color: var(--text);
-  }
-  .verdict.good { background: rgba(34,211,165,0.08); border-color: rgba(34,211,165,0.2); }
-  .verdict.warn { background: rgba(247,146,79,0.08); border-color: rgba(247,146,79,0.2); }
-
-  .share-btn {
-    width: 100%;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--muted);
-    font-size: 0.85rem;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    padding: 11px;
-    cursor: pointer;
-    margin-top: 12px;
-    transition: all 0.2s;
-  }
-  .share-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* PANEL VISIBILITY */
-  .panel { display: none; }
-  .panel.active { display: block; }
-
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 32px 24px;
-    color: var(--muted);
-    font-size: 0.78rem;
-    border-top: 1px solid var(--border);
-    margin-top: 20px;
-  }
-  footer a { color: var(--accent); text-decoration: none; }
-
-  /* STATS ROW */
-  .stats {
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-    padding: 0 24px 36px;
-    flex-wrap: wrap;
-  }
-  .stat { text-align: center; }
-  .stat .sn {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--accent);
-  }
-  .stat .sl {
-    font-size: 0.75rem;
-    color: var(--muted);
-    margin-top: 2px;
-  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#0d0f14;--surface:#161920;--border:#242830;--accent:#4f8ef7;--accent2:#22d3a5;--accent3:#f7924f;--text:#e8eaf0;--muted:#7a7f8e;--radius:16px}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(13,15,20,0.95);backdrop-filter:blur(12px);z-index:100}
+  .logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--accent);text-decoration:none;cursor:pointer}
+  .logo span{color:var(--text)}
+  .country-select-nav{background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:6px 10px;color:var(--text);font-size:0.78rem;font-weight:600;font-family:'Inter',sans-serif;outline:none;cursor:pointer;max-width:160px}
+  .country-select-nav option{background:var(--bg)}
+  .hero{text-align:center;padding:32px 16px 24px}
+  .hero-badge{display:inline-block;background:rgba(79,142,247,0.12);color:var(--accent);font-size:0.72rem;font-weight:600;padding:5px 12px;border-radius:100px;margin-bottom:14px;letter-spacing:0.5px;text-transform:uppercase}
+  .hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:700;line-height:1.15;margin-bottom:10px;letter-spacing:-0.5px}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p{color:var(--muted);font-size:0.88rem;max-width:340px;margin:0 auto;line-height:1.6}
+  .tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:0 16px;margin-bottom:20px}
+  .tab-btn{border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:0.75rem;font-weight:600;padding:10px 6px;border-radius:12px;cursor:pointer;transition:all 0.2s;text-align:center;white-space:nowrap}
+  .tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;max-width:520px;margin:0 auto 32px}
+  .card-title{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:5px}
+  .card-sub{color:var(--muted);font-size:0.82rem;margin-bottom:22px;line-height:1.5}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px}
+  .field input,.field select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.95rem;font-family:'Inter',sans-serif;padding:11px 13px;outline:none;transition:border-color 0.2s}
+  .field input:focus,.field select:focus{border-color:var(--accent)}
+  .field select option{background:var(--bg)}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .calc-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:0.95rem;font-weight:700;font-family:'Inter',sans-serif;padding:13px;cursor:pointer;margin-top:6px;transition:opacity 0.2s,transform 0.1s}
+  .calc-btn:active{transform:scale(0.98);opacity:0.9}
+  .result{margin-top:18px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px;display:none}
+  .result.show{display:block}
+  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+  .result-item .rl{font-size:0.7rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px}
+  .result-item .rv{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--accent)}
+  .result-item .rv.green{color:var(--accent2)}
+  .result-item .rv.orange{color:var(--accent3)}
+  .verdict{background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.2);border-radius:10px;padding:13px 15px;font-size:0.88rem;line-height:1.55;color:var(--text)}
+  .verdict.good{background:rgba(34,211,165,0.08);border-color:rgba(34,211,165,0.2)}
+  .verdict.warn{background:rgba(247,146,79,0.08);border-color:rgba(247,146,79,0.2)}
+  .share-btn{width:100%;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:0.83rem;font-weight:600;font-family:'Inter',sans-serif;padding:10px;cursor:pointer;margin-top:12px;transition:all 0.2s}
+  .share-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .panel{display:none}
+  .panel.active{display:block}
+  footer{text-align:center;padding:28px 20px;color:var(--muted);font-size:0.76rem;border-top:1px solid var(--border);margin-top:10px}
+  footer a{color:var(--accent);text-decoration:none}
 </style>
 </head>
 <body>
-
 <nav>
-  <div class="logo">Finch<span>Hub</span></div>
-  <div class="currency-toggle">
-    <button class="active" onclick="setCurrency('SAR', this)">SAR ﷼</button>
-    <button onclick="setCurrency('USD', this)">USD $</button>
-  </div>
+  <a class="logo" href="https://finchub.vercel.app" target="_blank">Finch<span>Hub</span></a>
+  <select class="country-select-nav" id="countrySelect" onchange="setCountry(this.value)">
+    <optgroup label="🌍 Middle East">
+      <option value="SA">🇸🇦 Saudi Arabia</option>
+      <option value="AE">🇦🇪 UAE</option>
+      <option value="KW">🇰🇼 Kuwait</option>
+      <option value="QA">🇶🇦 Qatar</option>
+      <option value="BH">🇧🇭 Bahrain</option>
+      <option value="OM">🇴🇲 Oman</option>
+      <option value="EG">🇪🇬 Egypt</option>
+    </optgroup>
+    <optgroup label="🌍 Europe">
+      <option value="GB">🇬🇧 United Kingdom</option>
+      <option value="DE">🇩🇪 Germany</option>
+      <option value="FR">🇫🇷 France</option>
+      <option value="NL">🇳🇱 Netherlands</option>
+      <option value="SE">🇸🇪 Sweden</option>
+      <option value="NO">🇳🇴 Norway</option>
+      <option value="CH">🇨🇭 Switzerland</option>
+      <option value="ES">🇪🇸 Spain</option>
+      <option value="IT">🇮🇹 Italy</option>
+      <option value="PL">🇵🇱 Poland</option>
+    </optgroup>
+    <optgroup label="🌎 Americas">
+      <option value="US">🇺🇸 United States</option>
+      <option value="CA">🇨🇦 Canada</option>
+      <option value="MX">🇲🇽 Mexico</option>
+      <option value="BR">🇧🇷 Brazil</option>
+    </optgroup>
+    <optgroup label="🌏 Asia Pacific">
+      <option value="IN">🇮🇳 India</option>
+      <option value="PK">🇵🇰 Pakistan</option>
+      <option value="BD">🇧🇩 Bangladesh</option>
+      <option value="AU">🇦🇺 Australia</option>
+      <option value="NZ">🇳🇿 New Zealand</option>
+      <option value="SG">🇸🇬 Singapore</option>
+      <option value="JP">🇯🇵 Japan</option>
+      <option value="PH">🇵🇭 Philippines</option>
+    </optgroup>
+    <optgroup label="🌍 Africa">
+      <option value="NG">🇳🇬 Nigeria</option>
+      <option value="ZA">🇿🇦 South Africa</option>
+      <option value="KE">🇰🇪 Kenya</option>
+    </optgroup>
+  </select>
 </nav>
 
 <section class="hero">
   <div class="hero-badge">100% Free · No Signup</div>
   <h1>Smart tools for<br><em>smarter money</em> decisions</h1>
-  <p>EMI, salary & freelance calculators built for Gulf & global users.</p>
+  <p>EMI, salary & freelance calculators with real data for 30+ countries worldwide.</p>
 </section>
 
-<div class="stats">
-  <div class="stat"><div class="sn">3</div><div class="sl">Free Tools</div></div>
-  <div class="stat"><div class="sn">2</div><div class="sl">Currencies</div></div>
-  <div class="stat"><div class="sn">0</div><div class="sl">Signup needed</div></div>
-</div>
-
-<!-- TABS -->
 <div class="tabs">
-  <button class="tab-btn active" onclick="showTab('emi', this)"><span class="dot"></span> EMI Calculator</button>
-  <button class="tab-btn" onclick="showTab('salary', this)"><span class="dot"></span> Salary Checker</button>
-  <button class="tab-btn" onclick="showTab('freelance', this)"><span class="dot"></span> Freelance Rate</button>
+  <button class="tab-btn active" onclick="showTab('emi',this)">EMI Calculator</button>
+  <button class="tab-btn" onclick="showTab('salary',this)">Salary Checker</button>
+  <button class="tab-btn" onclick="showTab('freelance',this)">Freelance Rate</button>
 </div>
 
-<!-- EMI PANEL -->
+<!-- EMI -->
 <div class="panel active" id="panel-emi">
   <div class="card">
     <div class="card-title">EMI Calculator</div>
     <div class="card-sub">Find out your monthly loan payment in seconds.</div>
-
-    <div class="field">
-      <label>Loan Amount (<span class="curr-label">SAR</span>)</label>
-      <input type="number" id="emi-amount" placeholder="e.g. 50000" min="0">
-    </div>
+    <div class="field"><label>Loan Amount (<span class="curr-sym">SAR</span>)</label><input type="number" id="emi-amount" placeholder="e.g. 50,000" min="0"></div>
     <div class="field-row">
-      <div class="field">
-        <label>Interest Rate (% / yr)</label>
-        <input type="number" id="emi-rate" placeholder="e.g. 6.5" step="0.1" min="0">
-      </div>
-      <div class="field">
-        <label>Loan Term (Months)</label>
-        <input type="number" id="emi-months" placeholder="e.g. 36" min="1">
-      </div>
+      <div class="field"><label>Interest Rate (% / yr)</label><input type="number" id="emi-rate" placeholder="e.g. 6.5" step="0.1" min="0"></div>
+      <div class="field"><label>Loan Term (Months)</label><input type="number" id="emi-months" placeholder="e.g. 36" min="1"></div>
     </div>
     <button class="calc-btn" onclick="calcEMI()">Calculate EMI</button>
-
     <div class="result" id="emi-result">
       <div class="result-grid">
-        <div class="result-item">
-          <div class="rl">Monthly EMI</div>
-          <div class="rv" id="emi-monthly"></div>
-        </div>
-        <div class="result-item">
-          <div class="rl">Total Payment</div>
-          <div class="rv orange" id="emi-total"></div>
-        </div>
-        <div class="result-item">
-          <div class="rl">Total Interest</div>
-          <div class="rv" id="emi-interest"></div>
-        </div>
-        <div class="result-item">
-          <div class="rl">Principal</div>
-          <div class="rv green" id="emi-principal"></div>
-        </div>
+        <div class="result-item"><div class="rl">Monthly EMI</div><div class="rv" id="emi-monthly"></div></div>
+        <div class="result-item"><div class="rl">Total Payment</div><div class="rv orange" id="emi-total"></div></div>
+        <div class="result-item"><div class="rl">Total Interest</div><div class="rv" id="emi-interest"></div></div>
+        <div class="result-item"><div class="rl">Principal</div><div class="rv green" id="emi-principal"></div></div>
       </div>
       <div class="verdict" id="emi-verdict"></div>
       <button class="share-btn" onclick="shareResult('EMI')">📤 Share Result</button>
@@ -395,33 +137,71 @@
   </div>
 </div>
 
-<!-- SALARY PANEL -->
+<!-- SALARY -->
 <div class="panel" id="panel-salary">
   <div class="card">
     <div class="card-title">Am I Underpaid? Salary Checker</div>
-    <div class="card-sub">Compare your salary against market benchmarks for your role & experience.</div>
-
+    <div class="card-sub">Compare your salary against real market data for your country, role & experience.</div>
     <div class="field">
       <label>Your Job Role</label>
       <select id="sal-role">
         <option value="">Select your role...</option>
-        <option value="software_engineer">Software Engineer</option>
-        <option value="data_analyst">Data Analyst</option>
-        <option value="graphic_designer">Graphic Designer</option>
-        <option value="marketing">Marketing Specialist</option>
-        <option value="accountant">Accountant</option>
-        <option value="project_manager">Project Manager</option>
-        <option value="sales">Sales Executive</option>
-        <option value="hr">HR Specialist</option>
-        <option value="teacher">Teacher / Educator</option>
-        <option value="nurse">Nurse / Healthcare</option>
-        <option value="content_creator">Content Creator</option>
-        <option value="customer_service">Customer Service</option>
+        <optgroup label="💻 Tech & Digital">
+          <option value="software_engineer">Software Engineer / Developer</option>
+          <option value="data_analyst">Data Analyst</option>
+          <option value="uiux_designer">UI/UX Designer</option>
+          <option value="cybersecurity">Cybersecurity Analyst</option>
+          <option value="network_engineer">Network / IT Engineer</option>
+          <option value="video_editor">Video Editor</option>
+          <option value="content_creator">Content Creator / Social Media</option>
+        </optgroup>
+        <optgroup label="🎨 Creative & Design">
+          <option value="graphic_designer">Graphic Designer</option>
+          <option value="photographer">Photographer / Videographer</option>
+        </optgroup>
+        <optgroup label="💼 Business & Finance">
+          <option value="accountant">Accountant / Finance</option>
+          <option value="project_manager">Project Manager</option>
+          <option value="marketing">Marketing Specialist</option>
+          <option value="sales">Sales Executive</option>
+          <option value="hr">HR Specialist</option>
+          <option value="admin">Secretary / Admin Assistant</option>
+          <option value="data_entry">Data Entry Operator</option>
+          <option value="receptionist">Receptionist</option>
+        </optgroup>
+        <optgroup label="🏗️ Engineering & Trades">
+          <option value="engineer_civil">Civil / Structural Engineer</option>
+          <option value="engineer_mechanical">Mechanical Engineer</option>
+          <option value="electrician">Electrician</option>
+          <option value="plumber">Plumber</option>
+          <option value="welder">Welder</option>
+          <option value="carpenter">Carpenter</option>
+          <option value="construction_worker">Construction / Labor Worker</option>
+          <option value="factory_worker">Factory / Warehouse Worker</option>
+        </optgroup>
+        <optgroup label="🏥 Healthcare">
+          <option value="doctor">Doctor / Physician</option>
+          <option value="nurse">Nurse</option>
+          <option value="pharmacist">Pharmacist</option>
+          <option value="dentist">Dentist</option>
+        </optgroup>
+        <optgroup label="📚 Education">
+          <option value="teacher">Teacher / Educator</option>
+        </optgroup>
+        <optgroup label="🍽️ Hospitality & Service">
+          <option value="chef">Chef / Cook</option>
+          <option value="hotel_manager">Hotel Manager</option>
+          <option value="waiter">Waiter / Server</option>
+          <option value="customer_service">Customer Service</option>
+          <option value="driver">Driver / Delivery</option>
+          <option value="security_guard">Security Guard</option>
+          <option value="cleaner">Cleaner / Janitor</option>
+        </optgroup>
       </select>
     </div>
     <div class="field-row">
       <div class="field">
-        <label>Experience (Years)</label>
+        <label>Experience</label>
         <select id="sal-exp">
           <option value="0">0–1 year</option>
           <option value="2">2–4 years</option>
@@ -430,30 +210,17 @@
         </select>
       </div>
       <div class="field">
-        <label>Your Current Salary (<span class="curr-label">SAR</span>/mo)</label>
-        <input type="number" id="sal-current" placeholder="e.g. 8000" min="0">
+        <label>Your Salary (<span class="curr-sym">SAR</span>/mo)</label>
+        <input type="number" id="sal-current" placeholder="e.g. 8,000" min="0">
       </div>
     </div>
     <button class="calc-btn" onclick="calcSalary()">Check My Salary</button>
-
     <div class="result" id="salary-result">
       <div class="result-grid">
-        <div class="result-item">
-          <div class="rl">Market Average</div>
-          <div class="rv" id="sal-avg"></div>
-        </div>
-        <div class="result-item">
-          <div class="rl">Market Range</div>
-          <div class="rv green" id="sal-range"></div>
-        </div>
-        <div class="result-item">
-          <div class="rl">Your Salary</div>
-          <div class="rv" id="sal-yours"></div>
-        </div>
-        <div class="result-item">
-          <div class="rl">Difference</div>
-          <div class="rv orange" id="sal-diff"></div>
-        </div>
+        <div class="result-item"><div class="rl">Market Average</div><div class="rv" id="sal-avg"></div></div>
+        <div class="result-item"><div class="rl">Market Range</div><div class="rv green" id="sal-range"></div></div>
+        <div class="result-item"><div class="rl">Your Salary</div><div class="rv" id="sal-yours"></div></div>
+        <div class="result-item"><div class="rl">Difference</div><div class="rv orange" id="sal-diff"></div></div>
       </div>
       <div class="verdict" id="sal-verdict"></div>
       <button class="share-btn" onclick="shareResult('Salary')">📤 Share Result</button>
@@ -461,54 +228,31 @@
   </div>
 </div>
 
-<!-- FREELANCE PANEL -->
+<!-- FREELANCE -->
 <div class="panel" id="panel-freelance">
   <div class="card">
     <div class="card-title">Freelance Rate Calculator</div>
-    <div class="card-sub">Find the right hourly & project rate based on your goals and expenses.</div>
-
-    <div class="field">
-      <label>Monthly Income Goal (<span class="curr-label">SAR</span>)</label>
-      <input type="number" id="fl-income" placeholder="e.g. 15000" min="0">
-    </div>
+    <div class="card-sub">Find the right hourly & project rate based on your income goals.</div>
+    <div class="field"><label>Monthly Income Goal (<span class="curr-sym">SAR</span>)</label><input type="number" id="fl-income" placeholder="e.g. 15,000" min="0"></div>
     <div class="field-row">
-      <div class="field">
-        <label>Monthly Expenses (<span class="curr-label">SAR</span>)</label>
-        <input type="number" id="fl-expenses" placeholder="e.g. 5000" min="0">
-      </div>
-      <div class="field">
-        <label>Billable Hours / Week</label>
-        <input type="number" id="fl-hours" placeholder="e.g. 25" min="1" max="60">
-      </div>
+      <div class="field"><label>Monthly Expenses (<span class="curr-sym">SAR</span>)</label><input type="number" id="fl-expenses" placeholder="e.g. 5,000" min="0"></div>
+      <div class="field"><label>Billable Hours / Week</label><input type="number" id="fl-hours" placeholder="e.g. 25" min="1" max="60"></div>
     </div>
     <div class="field">
       <label>Weeks Working / Month</label>
       <select id="fl-weeks">
-        <option value="4">4 weeks</option>
+        <option value="4">4 weeks (full-time)</option>
         <option value="3">3 weeks</option>
         <option value="2">2 weeks (part-time)</option>
       </select>
     </div>
     <button class="calc-btn" onclick="calcFreelance()">Calculate My Rate</button>
-
     <div class="result" id="freelance-result">
       <div class="result-grid">
-        <div class="result-item">
-          <div class="rl">Minimum Hourly Rate</div>
-          <div class="rv" id="fl-hourly"></div>
-        </div>
-        <div class="result-item">
-          <div class="rl">Recommended Rate</div>
-          <div class="rv green" id="fl-recommended"></div>
-        </div>
-        <div class="result-item">
-          <div class="rl">Daily Rate (8hr)</div>
-          <div class="rv" id="fl-daily"></div>
-        </div>
-        <div class="result-item">
-          <div class="rl">Project Rate (40hr)</div>
-          <div class="rv orange" id="fl-project"></div>
-        </div>
+        <div class="result-item"><div class="rl">Minimum Hourly</div><div class="rv" id="fl-hourly"></div></div>
+        <div class="result-item"><div class="rl">Recommended Rate</div><div class="rv green" id="fl-recommended"></div></div>
+        <div class="result-item"><div class="rl">Daily Rate (8hr)</div><div class="rv" id="fl-daily"></div></div>
+        <div class="result-item"><div class="rl">Project Rate (40hr)</div><div class="rv orange" id="fl-project"></div></div>
       </div>
       <div class="verdict" id="fl-verdict"></div>
       <button class="share-btn" onclick="shareResult('Freelance')">📤 Share Result</button>
@@ -517,140 +261,359 @@
 </div>
 
 <footer>
-  <p>© 2026 FinchHub · Free forever · Built for Gulf & global users</p>
+  <p>© 2026 FinchHub · Free forever · Salary data updated 2026</p>
   <p style="margin-top:8px"><a href="#">Privacy Policy</a> · <a href="#">About</a></p>
 </footer>
 
 <script>
-let currency = 'SAR';
-const rates = { SAR: 1, USD: 0.267 };
-const symbols = { SAR: '﷼', USD: '$' };
-
-// Salary benchmark data in SAR/month
-const salaryData = {
-  software_engineer: { base: [8000,12000,18000,28000], label: 'Software Engineer' },
-  data_analyst:      { base: [6000,9000,14000,22000],  label: 'Data Analyst' },
-  graphic_designer:  { base: [4000,6500,10000,16000],  label: 'Graphic Designer' },
-  marketing:         { base: [5000,7500,12000,18000],  label: 'Marketing Specialist' },
-  accountant:        { base: [5000,8000,12000,18000],  label: 'Accountant' },
-  project_manager:   { base: [8000,12000,18000,28000], label: 'Project Manager' },
-  sales:             { base: [4000,7000,11000,18000],  label: 'Sales Executive' },
-  hr:                { base: [5000,7500,11000,16000],  label: 'HR Specialist' },
-  teacher:           { base: [4000,6000,9000,14000],   label: 'Teacher' },
-  nurse:             { base: [5000,8000,12000,18000],  label: 'Nurse' },
-  content_creator:   { base: [3000,6000,10000,18000],  label: 'Content Creator' },
-  customer_service:  { base: [3500,5000,7000,10000],   label: 'Customer Service' },
+// All salaries in local currency per month. Sources: Glassdoor, PayScale, LinkedIn Salary, GulfTalent 2025-2026
+const C = {
+  SA:{n:'Saudi Arabia',c:'SAR',s:'﷼',d:{
+    software_engineer:[5500,9500,15000,22000],data_analyst:[4500,8000,12500,18000],uiux_designer:[4000,7000,11000,16500],cybersecurity:[6000,10500,16500,24000],network_engineer:[4500,8000,12500,18000],video_editor:[3000,5500,9000,13500],content_creator:[2500,4500,7500,12000],graphic_designer:[3000,5000,8000,12500],photographer:[2500,4500,7000,11000],
+    accountant:[4000,7000,10500,15000],project_manager:[6500,11000,17000,25000],marketing:[3500,6000,9500,14000],sales:[3000,5500,8500,13000],hr:[3500,6000,9000,13000],admin:[2500,3800,5500,8000],data_entry:[2000,3000,4500,6500],receptionist:[2000,3200,5000,7000],
+    engineer_civil:[5500,9000,14000,20000],engineer_mechanical:[5000,8500,13500,19000],electrician:[2500,4200,7000,10000],plumber:[2000,3500,5500,8500],welder:[2500,4200,6500,9500],carpenter:[2000,3500,5500,8500],construction_worker:[1500,2200,3200,4500],factory_worker:[1500,2000,2800,4000],
+    doctor:[14000,22000,35000,52000],nurse:[4000,6500,9500,14000],pharmacist:[6500,10000,15000,22000],dentist:[12000,18000,28000,42000],
+    teacher:[3000,5000,7500,11000],
+    chef:[2500,4200,7000,10500],hotel_manager:[5500,9000,14000,20000],waiter:[1500,2000,2800,4000],customer_service:[2500,3800,5500,8000],driver:[2000,2600,3800,5000],security_guard:[1800,2600,3500,4800],cleaner:[1200,1800,2500,3500]
+  }},
+  AE:{n:'UAE',c:'AED',s:'د.إ',d:{
+    software_engineer:[8500,15000,24000,38000],data_analyst:[7500,13000,20000,30000],uiux_designer:[7000,12000,18500,28000],cybersecurity:[9500,16500,26000,40000],network_engineer:[7500,12500,19000,29000],video_editor:[5000,9000,14000,22000],content_creator:[4500,8000,13000,20000],graphic_designer:[5500,9000,14000,21000],photographer:[4500,8000,12500,19000],
+    accountant:[6500,11000,17000,25000],project_manager:[11000,18000,28000,42000],marketing:[6500,11000,17000,25000],sales:[5500,10000,16000,24000],hr:[6500,10500,16000,24000],admin:[4500,7000,10500,15500],data_entry:[3500,5500,8000,11500],receptionist:[4000,6500,9500,14000],
+    engineer_civil:[9000,15000,23000,35000],engineer_mechanical:[8500,14000,22000,33000],electrician:[4500,7500,11500,17000],plumber:[4000,6500,10000,15000],welder:[4500,7500,11500,17000],carpenter:[4000,6500,10000,15000],construction_worker:[2500,3800,5500,8000],factory_worker:[2500,3500,5000,7000],
+    doctor:[22000,35000,52000,80000],nurse:[7000,10500,16000,24000],pharmacist:[10000,16000,24000,36000],dentist:[17000,27000,42000,65000],
+    teacher:[7000,10500,14000,20000],
+    chef:[4500,7500,11500,17500],hotel_manager:[9000,15000,23000,35000],waiter:[2800,4000,6000,8500],customer_service:[4500,7000,10000,15000],driver:[3200,4000,5500,7500],security_guard:[3200,4800,6500,9500],cleaner:[2200,3200,4500,6000]
+  }},
+  KW:{n:'Kuwait',c:'KWD',s:'KD',d:{
+    software_engineer:[750,1350,2100,3200],data_analyst:[650,1100,1750,2650],uiux_designer:[620,1050,1650,2500],cybersecurity:[850,1500,2350,3500],network_engineer:[680,1150,1800,2700],video_editor:[470,800,1250,1900],content_creator:[380,650,1050,1650],graphic_designer:[430,750,1200,1800],photographer:[370,630,1000,1550],
+    accountant:[550,950,1500,2250],project_manager:[950,1600,2500,3800],marketing:[550,900,1400,2100],sales:[450,750,1200,1800],hr:[550,900,1400,2100],admin:[340,550,820,1200],data_entry:[300,450,680,1000],receptionist:[320,500,760,1120],
+    engineer_civil:[750,1300,2000,3000],engineer_mechanical:[720,1250,1950,2900],electrician:[380,640,1000,1500],plumber:[330,560,870,1300],welder:[380,640,1000,1500],carpenter:[330,560,870,1300],construction_worker:[210,320,460,640],factory_worker:[200,290,410,570],
+    doctor:[1700,2600,4000,6000],nurse:[680,1000,1550,2300],pharmacist:[900,1400,2100,3200],dentist:[1400,2200,3400,5200],
+    teacher:[550,880,1250,1750],
+    chef:[380,630,1000,1500],hotel_manager:[750,1250,1950,2900],waiter:[220,320,480,680],customer_service:[380,560,840,1250],driver:[270,380,520,720],security_guard:[260,390,560,800],cleaner:[160,250,360,500]
+  }},
+  QA:{n:'Qatar',c:'QAR',s:'﷼',d:{
+    software_engineer:[8500,15000,24000,36000],data_analyst:[7500,12500,19000,29000],uiux_designer:[7000,12000,18500,28000],cybersecurity:[9500,16000,25000,38000],network_engineer:[7500,12500,19000,29000],video_editor:[5000,8500,13500,21000],content_creator:[4500,7500,12000,19000],graphic_designer:[5500,9000,14000,21000],photographer:[4500,7500,12000,18500],
+    accountant:[6500,11000,17000,25000],project_manager:[11000,18000,27000,41000],marketing:[6500,10500,16500,25000],sales:[5500,9500,15000,23000],hr:[6500,10000,15500,23000],admin:[4200,6500,10000,15000],data_entry:[3500,5200,7800,11500],receptionist:[3800,6000,9000,13500],
+    engineer_civil:[8500,14000,22000,33000],engineer_mechanical:[8000,13500,21000,32000],electrician:[4500,7500,11500,17000],plumber:[4000,6500,10000,15000],welder:[4500,7500,11500,17000],carpenter:[4000,6500,10000,15000],construction_worker:[2500,3800,5500,8000],factory_worker:[2500,3500,5000,7000],
+    doctor:[20000,32000,50000,75000],nurse:[7000,10500,16000,24000],pharmacist:[10000,16000,24000,36000],dentist:[16000,26000,40000,62000],
+    teacher:[7000,10500,14000,19000],
+    chef:[4500,7500,11500,17500],hotel_manager:[8500,14000,22000,33000],waiter:[2600,3800,5500,8000],customer_service:[4000,6500,9500,14500],driver:[3000,3800,5000,7000],security_guard:[3000,4500,6500,9500],cleaner:[2000,3000,4200,6000]
+  }},
+  BH:{n:'Bahrain',c:'BHD',s:'BD',d:{
+    software_engineer:[720,1250,1950,2900],data_analyst:[620,1050,1650,2500],uiux_designer:[590,1000,1580,2380],cybersecurity:[810,1400,2200,3300],network_engineer:[640,1090,1710,2570],video_editor:[440,750,1180,1790],content_creator:[320,580,980,1560],graphic_designer:[410,710,1100,1660],photographer:[340,580,920,1440],
+    accountant:[530,900,1380,2070],project_manager:[900,1500,2350,3530],marketing:[530,860,1350,2030],sales:[420,720,1130,1700],hr:[530,850,1330,2000],admin:[320,490,750,1120],data_entry:[275,415,630,930],receptionist:[295,460,700,1040],
+    engineer_civil:[720,1220,1900,2850],engineer_mechanical:[700,1180,1840,2760],electrician:[350,580,910,1370],plumber:[310,520,810,1220],welder:[350,580,910,1370],carpenter:[310,520,810,1220],construction_worker:[200,300,430,610],factory_worker:[195,270,385,535],
+    doctor:[1550,2400,3700,5600],nurse:[600,920,1430,2150],pharmacist:[840,1300,1960,2950],dentist:[1280,2000,3100,4700],
+    teacher:[530,810,1130,1590],
+    chef:[350,590,930,1400],hotel_manager:[720,1180,1840,2760],waiter:[200,290,425,600],customer_service:[320,480,710,1060],driver:[245,325,440,610],security_guard:[245,365,520,740],cleaner:[155,230,330,460]
+  }},
+  OM:{n:'Oman',c:'OMR',s:'﷼',d:{
+    software_engineer:[700,1200,1900,2850],data_analyst:[600,1000,1600,2400],uiux_designer:[570,970,1530,2300],cybersecurity:[790,1380,2150,3230],network_engineer:[620,1050,1650,2480],video_editor:[420,720,1130,1720],content_creator:[310,570,960,1530],graphic_designer:[400,680,1070,1610],photographer:[330,570,900,1420],
+    accountant:[520,880,1360,2040],project_manager:[870,1440,2250,3380],marketing:[520,840,1320,1980],sales:[410,700,1090,1640],hr:[510,820,1290,1940],admin:[310,475,720,1080],data_entry:[265,400,600,890],receptionist:[285,445,680,1010],
+    engineer_civil:[700,1180,1840,2760],engineer_mechanical:[680,1140,1780,2670],electrician:[340,560,880,1320],plumber:[300,500,780,1180],welder:[340,560,880,1320],carpenter:[300,500,780,1180],construction_worker:[190,290,415,585],factory_worker:[185,258,365,500],
+    doctor:[1450,2250,3500,5250],nurse:[580,890,1380,2080],pharmacist:[810,1250,1890,2840],dentist:[1200,1880,2920,4380],
+    teacher:[520,790,1100,1550],
+    chef:[340,570,890,1340],hotel_manager:[700,1140,1780,2670],waiter:[190,275,410,575],customer_service:[305,455,685,1020],driver:[235,315,425,590],security_guard:[235,350,500,715],cleaner:[148,220,318,432]
+  }},
+  EG:{n:'Egypt',c:'EGP',s:'E£',d:{
+    software_engineer:[9000,18000,32000,52000],data_analyst:[7500,14000,25000,40000],uiux_designer:[7000,13500,24000,38000],cybersecurity:[10000,19000,34000,55000],network_engineer:[7800,15000,27000,43000],video_editor:[5000,9500,17000,27000],content_creator:[4500,9000,16000,26000],graphic_designer:[5500,10000,18000,28000],photographer:[4500,8500,15000,24000],
+    accountant:[6500,12000,20000,32000],project_manager:[11000,20000,35000,56000],marketing:[6500,12000,20000,32000],sales:[5500,10000,17000,27000],hr:[6500,11500,19000,30000],admin:[4000,6500,10500,16500],data_entry:[3200,5000,8000,12000],receptionist:[3500,5800,9500,15000],
+    engineer_civil:[9000,17000,30000,48000],engineer_mechanical:[8500,16000,28000,45000],electrician:[4500,8500,15000,24000],plumber:[4000,7500,13000,21000],welder:[4500,8500,15000,24000],carpenter:[4000,7500,13000,21000],construction_worker:[2800,4500,7000,11000],factory_worker:[2600,4000,6500,10000],
+    doctor:[18000,30000,52000,85000],nurse:[7000,12000,20000,30000],pharmacist:[10000,17000,28000,45000],dentist:[15000,26000,44000,72000],
+    teacher:[5500,9000,15000,22000],
+    chef:[4500,8000,14000,22000],hotel_manager:[9000,16000,27000,43000],waiter:[2800,4200,6500,9500],customer_service:[4500,7500,12000,18000],driver:[4000,5800,8500,12000],security_guard:[3500,5500,8500,12500],cleaner:[2200,3500,5500,8000]
+  }},
+  GB:{n:'United Kingdom',c:'GBP',s:'£',d:{
+    software_engineer:[3000,4500,6200,8500],data_analyst:[2600,3800,5200,7200],uiux_designer:[2500,3600,5000,7000],cybersecurity:[3000,4600,6400,9000],network_engineer:[2600,3900,5400,7500],video_editor:[2000,3000,4200,5800],content_creator:[1800,2700,3900,5500],graphic_designer:[2000,2900,4000,5500],photographer:[1800,2700,3800,5300],
+    accountant:[2400,3500,4900,6800],project_manager:[3300,4800,6500,9000],marketing:[2200,3200,4400,6200],sales:[2200,3200,4400,6500],hr:[2400,3400,4700,6500],admin:[1900,2500,3400,4600],data_entry:[1700,2200,3000,4000],receptionist:[1900,2500,3300,4500],
+    engineer_civil:[2800,4200,5800,8000],engineer_mechanical:[2700,4000,5600,7800],electrician:[2500,3400,4600,6200],plumber:[2500,3500,4800,6500],welder:[2100,3000,4100,5700],carpenter:[2100,2900,3900,5400],construction_worker:[1900,2500,3300,4400],factory_worker:[1900,2300,3000,3900],
+    doctor:[5000,7000,9500,13500],nurse:[2600,3300,4200,5400],pharmacist:[3300,4500,5900,8000],dentist:[4500,6200,8200,11000],
+    teacher:[2400,3100,4000,5200],
+    chef:[2000,2900,4000,5500],hotel_manager:[2500,3600,5000,7000],waiter:[1700,2000,2600,3500],customer_service:[1800,2200,2900,3900],driver:[2000,2500,3100,4000],security_guard:[1900,2400,3100,4100],cleaner:[1700,2000,2600,3400]
+  }},
+  DE:{n:'Germany',c:'EUR',s:'€',d:{
+    software_engineer:[3800,5500,7500,10000],data_analyst:[3200,4600,6300,8500],uiux_designer:[3100,4400,6000,8200],cybersecurity:[3800,5600,7800,10500],network_engineer:[3200,4600,6300,8500],video_editor:[2400,3500,4900,6700],content_creator:[2200,3200,4600,6300],graphic_designer:[2600,3700,5000,6800],photographer:[2200,3200,4500,6200],
+    accountant:[3000,4300,5900,8000],project_manager:[4200,5900,8000,11000],marketing:[2800,4000,5500,7500],sales:[2800,4000,5500,7500],hr:[3000,4200,5700,7800],admin:[2400,3200,4300,5900],data_entry:[2100,2800,3800,5200],receptionist:[2300,3100,4200,5700],
+    engineer_civil:[3500,5000,6800,9200],engineer_mechanical:[3500,5000,6800,9200],electrician:[2700,3700,5000,6800],plumber:[2600,3600,4800,6600],welder:[2400,3300,4500,6100],carpenter:[2400,3200,4300,5900],construction_worker:[2200,3000,4000,5500],factory_worker:[2100,2800,3700,5000],
+    doctor:[5500,8000,11000,15500],nurse:[2800,3600,4700,6200],pharmacist:[3500,4800,6400,8800],dentist:[5000,7000,9500,13000],
+    teacher:[3000,3900,5000,6500],
+    chef:[2200,3100,4300,5900],hotel_manager:[2900,4100,5700,7800],waiter:[2000,2500,3300,4400],customer_service:[2200,2900,3900,5200],driver:[2400,3000,3800,5000],security_guard:[2100,2800,3700,5000],cleaner:[2000,2500,3300,4300]
+  }},
+  FR:{n:'France',c:'EUR',s:'€',d:{
+    software_engineer:[3000,4400,6000,8200],data_analyst:[2700,3900,5300,7200],uiux_designer:[2600,3700,5100,7000],cybersecurity:[3200,4700,6500,9000],network_engineer:[2800,4000,5500,7500],video_editor:[2100,3100,4400,6000],content_creator:[1900,2800,4000,5600],graphic_designer:[2200,3100,4200,5800],photographer:[1900,2800,4000,5600],
+    accountant:[2600,3700,5000,6900],project_manager:[3500,5000,6900,9500],marketing:[2400,3400,4700,6500],sales:[2400,3400,4700,6600],hr:[2600,3700,5000,6900],admin:[2100,2800,3800,5200],data_entry:[1900,2500,3400,4600],receptionist:[2100,2800,3800,5200],
+    engineer_civil:[3000,4300,5900,8100],engineer_mechanical:[2900,4200,5700,7800],electrician:[2400,3300,4500,6200],plumber:[2400,3300,4500,6200],welder:[2100,3000,4000,5500],carpenter:[2100,2900,4000,5500],construction_worker:[2000,2800,3700,5100],factory_worker:[1900,2600,3500,4800],
+    doctor:[5000,7200,10000,14000],nurse:[2400,3100,4000,5200],pharmacist:[3300,4500,6000,8200],dentist:[4400,6200,8500,11500],
+    teacher:[2400,3100,4000,5200],
+    chef:[2100,2900,4000,5500],hotel_manager:[2700,3900,5400,7400],waiter:[1800,2200,2900,3900],customer_service:[2000,2600,3500,4700],driver:[2100,2700,3500,4600],security_guard:[2000,2600,3500,4700],cleaner:[1800,2300,3000,4000]
+  }},
+  NL:{n:'Netherlands',c:'EUR',s:'€',d:{
+    software_engineer:[3800,5500,7500,10200],data_analyst:[3200,4600,6300,8600],uiux_designer:[3100,4400,6000,8200],cybersecurity:[3900,5700,7900,10800],network_engineer:[3200,4700,6400,8700],video_editor:[2400,3500,4900,6700],content_creator:[2300,3400,4900,6700],graphic_designer:[2700,3800,5200,7100],photographer:[2300,3400,4800,6600],
+    accountant:[3100,4500,6100,8400],project_manager:[4200,6000,8200,11200],marketing:[2900,4200,5800,7900],sales:[2900,4200,5800,7900],hr:[3100,4400,6000,8200],admin:[2500,3400,4700,6400],data_entry:[2300,3000,4100,5600],receptionist:[2500,3400,4600,6300],
+    engineer_civil:[3500,5000,6900,9400],engineer_mechanical:[3500,4900,6700,9200],electrician:[2800,3900,5400,7400],plumber:[2700,3800,5200,7200],welder:[2500,3500,4800,6600],carpenter:[2500,3400,4700,6400],construction_worker:[2300,3100,4300,5900],factory_worker:[2200,3000,4100,5600],
+    doctor:[6000,8500,11500,16000],nurse:[2900,3800,5000,6700],pharmacist:[3700,5100,6900,9500],dentist:[5300,7400,10000,13800],
+    teacher:[3000,3900,5100,6600],
+    chef:[2300,3200,4500,6100],hotel_manager:[2900,4200,5800,8000],waiter:[2000,2600,3500,4700],customer_service:[2300,3000,4100,5600],driver:[2500,3100,4000,5300],security_guard:[2200,3000,4000,5400],cleaner:[2000,2600,3500,4700]
+  }},
+  SE:{n:'Sweden',c:'SEK',s:'kr',d:{
+    software_engineer:[38000,55000,72000,95000],data_analyst:[32000,46000,62000,82000],uiux_designer:[31000,44000,60000,80000],cybersecurity:[39000,57000,76000,101000],network_engineer:[32000,46000,63000,84000],video_editor:[26000,37000,52000,70000],content_creator:[24000,35000,50000,67000],graphic_designer:[27000,37000,50000,67000],photographer:[24000,34000,48000,65000],
+    accountant:[30000,42000,57000,76000],project_manager:[41000,58000,77000,102000],marketing:[29000,40000,54000,72000],sales:[28000,40000,54000,73000],hr:[30000,42000,57000,76000],admin:[25000,33000,45000,60000],data_entry:[23000,30000,41000,55000],receptionist:[25000,33000,45000,60000],
+    engineer_civil:[35000,49000,65000,86000],engineer_mechanical:[35000,48000,64000,85000],electrician:[28000,38000,51000,68000],plumber:[27000,37000,50000,67000],welder:[25000,34000,47000,63000],carpenter:[25000,33000,45000,60000],construction_worker:[23000,31000,42000,57000],factory_worker:[23000,30000,40000,54000],
+    doctor:[60000,85000,115000,155000],nurse:[30000,38000,49000,63000],pharmacist:[37000,51000,68000,91000],dentist:[52000,74000,99000,133000],
+    teacher:[30000,38000,48000,62000],
+    chef:[24000,33000,46000,62000],hotel_manager:[31000,44000,60000,82000],waiter:[21000,27000,35000,47000],customer_service:[24000,30000,40000,53000],driver:[26000,32000,40000,52000],security_guard:[23000,30000,40000,53000],cleaner:[21000,27000,35000,46000]
+  }},
+  NO:{n:'Norway',c:'NOK',s:'kr',d:{
+    software_engineer:[50000,68000,88000,115000],data_analyst:[42000,58000,76000,100000],uiux_designer:[41000,56000,74000,98000],cybersecurity:[52000,71000,93000,123000],network_engineer:[42000,58000,77000,102000],video_editor:[33000,47000,63000,85000],content_creator:[31000,45000,62000,84000],graphic_designer:[35000,47000,62000,83000],photographer:[31000,44000,60000,81000],
+    accountant:[40000,54000,72000,96000],project_manager:[52000,72000,95000,125000],marketing:[37000,51000,67000,89000],sales:[36000,50000,67000,90000],hr:[40000,54000,72000,96000],admin:[32000,43000,57000,77000],data_entry:[29000,38000,52000,70000],receptionist:[32000,43000,57000,77000],
+    engineer_civil:[46000,63000,83000,110000],engineer_mechanical:[45000,62000,82000,108000],electrician:[37000,50000,66000,88000],plumber:[36000,49000,65000,87000],welder:[33000,45000,60000,81000],carpenter:[33000,44000,59000,79000],construction_worker:[30000,41000,55000,73000],factory_worker:[29000,39000,52000,70000],
+    doctor:[78000,108000,148000,200000],nurse:[42000,53000,66000,84000],pharmacist:[49000,66000,87000,116000],dentist:[70000,97000,128000,172000],
+    teacher:[42000,52000,64000,80000],
+    chef:[31000,43000,59000,80000],hotel_manager:[40000,57000,77000,103000],waiter:[28000,35000,46000,62000],customer_service:[31000,40000,52000,70000],driver:[35000,43000,53000,68000],security_guard:[31000,41000,54000,72000],cleaner:[29000,37000,48000,64000]
+  }},
+  CH:{n:'Switzerland',c:'CHF',s:'Fr',d:{
+    software_engineer:[6500,9500,12500,17000],data_analyst:[5700,8000,11000,14800],uiux_designer:[5500,7700,10600,14400],cybersecurity:[6800,9800,13500,18500],network_engineer:[5700,8100,11100,15100],video_editor:[4200,6100,8500,11600],content_creator:[3800,5600,7900,10800],graphic_designer:[4400,6200,8500,11600],photographer:[3800,5600,7900,10800],
+    accountant:[5200,7300,10000,13700],project_manager:[7200,10200,14000,19200],marketing:[4900,7000,9600,13100],sales:[4900,7000,9600,13200],hr:[5200,7300,10000,13800],admin:[4100,5700,7800,10700],data_entry:[3800,5200,7200,9900],receptionist:[4100,5700,7800,10700],
+    engineer_civil:[6000,8500,11600,15800],engineer_mechanical:[6000,8400,11500,15600],electrician:[4900,6700,9000,12200],plumber:[4700,6500,8800,12000],welder:[4300,6000,8200,11200],carpenter:[4200,5900,8000,10900],construction_worker:[3900,5400,7300,9900],factory_worker:[3800,5200,7000,9600],
+    doctor:[10000,14500,20000,28000],nurse:[5500,6900,9000,12000],pharmacist:[6900,9500,13000,17800],dentist:[9500,13500,18500,25500],
+    teacher:[5500,7000,9000,11800],
+    chef:[4100,5800,8000,11000],hotel_manager:[5800,8200,11300,15500],waiter:[3500,4400,5900,7900],customer_service:[4200,5500,7500,10200],driver:[4400,5500,6800,9000],security_guard:[4100,5400,7100,9700],cleaner:[3600,4700,6300,8600]
+  }},
+  ES:{n:'Spain',c:'EUR',s:'€',d:{
+    software_engineer:[2400,3500,5000,7000],data_analyst:[2000,2900,4200,5900],uiux_designer:[1950,2800,4000,5700],cybersecurity:[2600,3800,5500,7700],network_engineer:[2100,3100,4400,6200],video_editor:[1600,2400,3500,4900],content_creator:[1500,2200,3200,4600],graphic_designer:[1700,2500,3500,4900],photographer:[1500,2200,3100,4400],
+    accountant:[1900,2800,4000,5600],project_manager:[2700,3900,5500,7700],marketing:[1900,2700,3900,5500],sales:[1800,2600,3700,5300],hr:[1900,2700,3900,5500],admin:[1500,2100,2900,4000],data_entry:[1400,1900,2600,3600],receptionist:[1500,2100,2900,4000],
+    engineer_civil:[2200,3200,4600,6400],engineer_mechanical:[2100,3100,4400,6200],electrician:[1800,2600,3700,5200],plumber:[1700,2500,3500,5000],welder:[1600,2300,3300,4700],carpenter:[1600,2200,3200,4500],construction_worker:[1500,2100,2900,4000],factory_worker:[1400,1900,2700,3700],
+    doctor:[3500,5000,7200,10000],nurse:[2000,2600,3400,4400],pharmacist:[2500,3500,4900,6800],dentist:[3200,4700,6600,9200],
+    teacher:[1900,2500,3200,4300],
+    chef:[1600,2300,3300,4600],hotel_manager:[2100,3100,4400,6200],waiter:[1400,1700,2300,3100],customer_service:[1500,2000,2800,3900],driver:[1700,2100,2700,3600],security_guard:[1500,2000,2700,3700],cleaner:[1300,1700,2300,3100]
+  }},
+  IT:{n:'Italy',c:'EUR',s:'€',d:{
+    software_engineer:[2200,3300,4700,6500],data_analyst:[1900,2800,4000,5600],uiux_designer:[1850,2700,3900,5400],cybersecurity:[2400,3600,5100,7200],network_engineer:[2000,3000,4300,6000],video_editor:[1500,2300,3300,4700],content_creator:[1400,2100,3100,4400],graphic_designer:[1600,2300,3300,4700],photographer:[1400,2100,3000,4300],
+    accountant:[1800,2700,3900,5400],project_manager:[2600,3700,5300,7400],marketing:[1700,2500,3600,5100],sales:[1700,2500,3500,5000],hr:[1800,2600,3800,5300],admin:[1500,2000,2900,4000],data_entry:[1300,1800,2500,3500],receptionist:[1500,2000,2900,4000],
+    engineer_civil:[2000,3000,4300,6000],engineer_mechanical:[1950,2900,4100,5800],electrician:[1800,2500,3600,5000],plumber:[1700,2400,3400,4800],welder:[1600,2200,3200,4500],carpenter:[1600,2200,3100,4400],construction_worker:[1500,2000,2900,4000],factory_worker:[1400,1900,2700,3700],
+    doctor:[3300,4800,6800,9500],nurse:[1900,2400,3200,4200],pharmacist:[2300,3300,4600,6400],dentist:[3100,4500,6300,8800],
+    teacher:[1800,2400,3100,4100],
+    chef:[1600,2300,3200,4500],hotel_manager:[2000,3000,4300,6000],waiter:[1300,1700,2300,3100],customer_service:[1400,1900,2600,3600],driver:[1600,2000,2600,3500],security_guard:[1400,1900,2600,3500],cleaner:[1300,1700,2200,3000]
+  }},
+  PL:{n:'Poland',c:'PLN',s:'zł',d:{
+    software_engineer:[7000,12000,18000,27000],data_analyst:[5500,9500,14500,22000],uiux_designer:[5200,9000,14000,21000],cybersecurity:[7500,13000,20000,30000],network_engineer:[5700,10000,15500,23000],video_editor:[4000,7000,11000,17000],content_creator:[3500,6000,9500,15000],graphic_designer:[4000,6800,10500,16000],photographer:[3500,6000,9500,14500],
+    accountant:[4800,8000,12500,19000],project_manager:[8000,13500,21000,32000],marketing:[4500,7500,12000,18000],sales:[4300,7200,11000,17000],hr:[4800,8000,12500,19000],admin:[3600,5500,8500,13000],data_entry:[3200,5000,7800,12000],receptionist:[3600,5500,8500,13000],
+    engineer_civil:[6500,10500,16500,25000],engineer_mechanical:[6200,10000,16000,24000],electrician:[4700,7500,11500,18000],plumber:[4400,7000,11000,17000],welder:[4200,6700,10500,16000],carpenter:[4000,6500,10000,15500],construction_worker:[3700,5800,9000,14000],factory_worker:[3500,5500,8500,13000],
+    doctor:[9500,15000,23000,36000],nurse:[4500,6500,9500,14000],pharmacist:[6500,10000,15000,23000],dentist:[8500,13500,21000,32000],
+    teacher:[4500,6500,9000,13500],
+    chef:[3800,6000,9500,14500],hotel_manager:[5800,9500,15000,23000],waiter:[3200,4500,6800,10000],customer_service:[3600,5500,8500,13000],driver:[4000,5200,7200,10000],security_guard:[3700,5200,7500,11000],cleaner:[3200,4500,6500,9500]
+  }},
+  US:{n:'United States',c:'USD',s:'$',d:{
+    software_engineer:[6000,9500,13500,19000],data_analyst:[5000,7800,11000,15500],uiux_designer:[4700,7200,10500,15000],cybersecurity:[6000,9500,13500,19500],network_engineer:[5000,7500,10800,15500],video_editor:[3500,5500,8000,11500],content_creator:[3000,5000,7500,11000],graphic_designer:[3500,5200,7500,10500],photographer:[3000,4800,7000,10000],
+    accountant:[4400,6500,9000,12500],project_manager:[6500,9800,14000,19500],marketing:[4200,6200,8700,12500],sales:[4200,6200,8700,12500],hr:[4600,6800,9500,13500],admin:[3300,4500,6200,8500],data_entry:[3000,4000,5500,7500],receptionist:[3200,4400,6000,8200],
+    engineer_civil:[5500,8000,11500,16000],engineer_mechanical:[5500,8000,11500,16000],electrician:[4500,6200,8500,11500],plumber:[4500,6300,8700,12000],welder:[3600,5100,7000,9800],carpenter:[3500,5000,6800,9500],construction_worker:[3100,4300,5800,8000],factory_worker:[3000,3900,5300,7300],
+    doctor:[14000,20000,30000,45000],nurse:[6000,7800,10000,13500],pharmacist:[9000,12000,15500,20500],dentist:[12000,17000,23000,32000],
+    teacher:[3800,5000,6500,8500],
+    chef:[3100,4600,6500,9200],hotel_manager:[5000,7500,10800,15500],waiter:[2500,3200,4400,6000],customer_service:[3100,4000,5500,7500],driver:[3500,4300,5300,7000],security_guard:[3100,4000,5300,7200],cleaner:[2800,3500,4500,6000]
+  }},
+  CA:{n:'Canada',c:'CAD',s:'C$',d:{
+    software_engineer:[6000,8800,12500,17500],data_analyst:[5000,7200,10200,14500],uiux_designer:[4700,6800,9800,14000],cybersecurity:[6100,9000,12800,18500],network_engineer:[5000,7400,10600,15000],video_editor:[3500,5200,7500,10800],content_creator:[3000,4800,7000,10200],graphic_designer:[3500,5000,7200,10200],photographer:[3000,4700,6800,9700],
+    accountant:[4400,6300,8800,12500],project_manager:[6300,9200,13200,18800],marketing:[4100,5900,8400,12000],sales:[4100,5900,8400,12200],hr:[4700,6700,9500,13500],admin:[3200,4400,6000,8300],data_entry:[2900,3900,5400,7400],receptionist:[3100,4300,5900,8100],
+    engineer_civil:[5500,7800,11000,15500],engineer_mechanical:[5400,7700,10800,15200],electrician:[4500,6000,8200,11500],plumber:[4400,6000,8300,11800],welder:[3600,5000,6900,9700],carpenter:[3500,4800,6700,9400],construction_worker:[3200,4400,5900,8200],factory_worker:[3100,4000,5500,7600],
+    doctor:[12500,18500,26000,38000],nurse:[6000,7600,9800,12800],pharmacist:[8500,11500,15000,20000],dentist:[11000,15500,21500,30000],
+    teacher:[5000,6500,8200,10800],
+    chef:[3100,4500,6400,9100],hotel_manager:[5000,7200,10200,14500],waiter:[2500,3100,4200,5800],customer_service:[3100,4000,5500,7500],driver:[3800,4700,5800,7600],security_guard:[3200,4200,5600,7700],cleaner:[2900,3700,4900,6600]
+  }},
+  MX:{n:'Mexico',c:'MXN',s:'$',d:{
+    software_engineer:[17000,28000,43000,63000],data_analyst:[13500,22000,35000,52000],uiux_designer:[12500,21000,33000,49000],cybersecurity:[18000,30000,46000,68000],network_engineer:[13500,23000,36000,54000],video_editor:[9000,15000,24000,36000],content_creator:[8000,13500,22000,35000],graphic_designer:[9000,15000,23000,35000],photographer:[8000,13000,21000,32000],
+    accountant:[11000,18000,28000,42000],project_manager:[20000,32000,50000,75000],marketing:[11000,18000,28000,42000],sales:[10000,17000,26000,39000],hr:[11000,18000,28000,42000],admin:[7800,12000,18500,28000],data_entry:[7000,11000,17000,25000],receptionist:[7800,12000,18500,28000],
+    engineer_civil:[15500,25000,39000,58000],engineer_mechanical:[15000,24000,37000,55000],electrician:[10000,16000,25000,38000],plumber:[9000,14500,23000,34000],welder:[9500,15500,24000,36000],carpenter:[9000,14500,22000,33000],construction_worker:[7000,11000,17000,26000],factory_worker:[6800,10500,16000,24000],
+    doctor:[25000,42000,68000,108000],nurse:[11000,17000,26000,38000],pharmacist:[16000,26000,40000,62000],dentist:[21000,36000,58000,92000],
+    teacher:[10000,15000,22000,32000],
+    chef:[9000,15000,24000,36000],hotel_manager:[15000,24000,38000,57000],waiter:[6200,9500,15000,22000],customer_service:[8000,12000,18500,28000],driver:[8000,10500,14000,20000],security_guard:[7500,10500,15500,23000],cleaner:[6200,9000,13500,20000]
+  }},
+  BR:{n:'Brazil',c:'BRL',s:'R$',d:{
+    software_engineer:[5500,10000,16000,26000],data_analyst:[4500,8000,13000,21000],uiux_designer:[4200,7600,12500,20000],cybersecurity:[5800,10500,17000,28000],network_engineer:[4700,8500,14000,22000],video_editor:[3100,5700,9500,15000],content_creator:[2800,5000,8500,14000],graphic_designer:[3100,5600,9000,14500],photographer:[2800,5000,8200,13500],
+    accountant:[3800,6500,10500,17000],project_manager:[6500,11500,18500,30000],marketing:[3600,6300,10000,16500],sales:[3400,6000,9500,15500],hr:[3800,6500,10500,17000],admin:[2800,4500,7200,11500],data_entry:[2500,4000,6500,10000],receptionist:[2800,4500,7200,11500],
+    engineer_civil:[5000,8500,14000,22500],engineer_mechanical:[4800,8200,13500,21500],electrician:[3400,5800,9500,15000],plumber:[3100,5400,8800,14000],welder:[3400,5800,9500,15000],carpenter:[3000,5200,8500,13500],construction_worker:[2500,4000,6500,10500],factory_worker:[2400,3800,6000,9800],
+    doctor:[9000,16000,27000,45000],nurse:[3900,6400,10000,16000],pharmacist:[5500,9200,15000,24000],dentist:[8000,14000,23000,38000],
+    teacher:[3300,5200,8000,13000],
+    chef:[3100,5300,8500,13800],hotel_manager:[5000,8500,13800,22500],waiter:[2200,3300,5200,8000],customer_service:[2800,4400,7000,11000],driver:[2800,3700,5200,7700],security_guard:[2600,3900,6000,9200],cleaner:[2200,3300,5000,7800]
+  }},
+  IN:{n:'India',c:'INR',s:'₹',d:{
+    software_engineer:[35000,75000,140000,240000],data_analyst:[28000,60000,115000,195000],uiux_designer:[25000,55000,105000,180000],cybersecurity:[38000,80000,150000,260000],network_engineer:[28000,60000,115000,195000],video_editor:[16000,33000,62000,105000],content_creator:[13000,28000,56000,100000],graphic_designer:[16000,32000,58000,98000],photographer:[13000,27000,50000,86000],
+    accountant:[20000,40000,75000,128000],project_manager:[45000,90000,170000,290000],marketing:[20000,40000,75000,128000],sales:[17000,34000,64000,108000],hr:[22000,44000,82000,140000],admin:[14000,23000,38000,60000],data_entry:[11000,18000,30000,47000],receptionist:[14000,23000,38000,60000],
+    engineer_civil:[28000,58000,110000,188000],engineer_mechanical:[27000,56000,106000,180000],electrician:[14000,26000,47000,78000],plumber:[12000,21000,38000,63000],welder:[14000,26000,47000,78000],carpenter:[12000,21000,38000,63000],construction_worker:[9000,14000,22000,35000],factory_worker:[8500,13000,20000,30000],
+    doctor:[55000,100000,180000,320000],nurse:[17000,29000,48000,78000],pharmacist:[25000,46000,82000,140000],dentist:[45000,85000,155000,270000],
+    teacher:[17000,28000,46000,75000],
+    chef:[13000,25000,44000,72000],hotel_manager:[28000,55000,100000,170000],waiter:[9000,14000,22000,33000],customer_service:[14000,23000,38000,60000],driver:[11000,16000,23000,34000],security_guard:[10000,16000,24000,35000],cleaner:[8000,12000,18000,27000]
+  }},
+  PK:{n:'Pakistan',c:'PKR',s:'₨',d:{
+    software_engineer:[65000,130000,220000,360000],data_analyst:[55000,100000,170000,280000],uiux_designer:[50000,95000,160000,265000],cybersecurity:[70000,140000,235000,390000],network_engineer:[55000,105000,175000,290000],video_editor:[33000,65000,110000,180000],content_creator:[28000,56000,96000,160000],graphic_designer:[33000,62000,105000,170000],photographer:[28000,52000,88000,145000],
+    accountant:[40000,75000,125000,200000],project_manager:[80000,150000,250000,420000],marketing:[40000,75000,125000,200000],sales:[34000,64000,108000,175000],hr:[42000,78000,132000,215000],admin:[25000,40000,62000,96000],data_entry:[20000,32000,50000,78000],receptionist:[25000,40000,62000,96000],
+    engineer_civil:[58000,115000,195000,320000],engineer_mechanical:[55000,110000,186000,305000],electrician:[25000,46000,78000,128000],plumber:[21000,39000,66000,108000],welder:[25000,46000,78000,128000],carpenter:[21000,39000,66000,108000],construction_worker:[14000,22000,34000,52000],factory_worker:[13000,20000,30000,46000],
+    doctor:[90000,165000,290000,490000],nurse:[40000,70000,115000,185000],pharmacist:[62000,108000,180000,295000],dentist:[80000,148000,260000,440000],
+    teacher:[34000,58000,90000,142000],
+    chef:[25000,46000,78000,128000],hotel_manager:[58000,110000,186000,308000],waiter:[14000,21000,32000,47000],customer_service:[28000,46000,72000,112000],driver:[22000,32000,46000,65000],security_guard:[20000,30000,44000,65000],cleaner:[14000,20000,30000,44000]
+  }},
+  BD:{n:'Bangladesh',c:'BDT',s:'৳',d:{
+    software_engineer:[28000,56000,100000,170000],data_analyst:[22000,45000,82000,138000],uiux_designer:[20000,42000,77000,130000],cybersecurity:[30000,60000,108000,182000],network_engineer:[23000,46000,84000,142000],video_editor:[14000,27000,49000,82000],content_creator:[11000,23000,42000,72000],graphic_designer:[14000,26000,46000,78000],photographer:[11000,22000,40000,68000],
+    accountant:[16000,30000,56000,95000],project_manager:[32000,64000,115000,195000],marketing:[16000,30000,56000,95000],sales:[14000,26000,48000,80000],hr:[17000,32000,58000,98000],admin:[11000,19000,30000,48000],data_entry:[10000,16000,26000,42000],receptionist:[11000,19000,30000,48000],
+    engineer_civil:[25000,50000,92000,155000],engineer_mechanical:[24000,48000,88000,148000],electrician:[14000,26000,46000,77000],plumber:[12000,22000,39000,65000],welder:[14000,26000,46000,77000],carpenter:[12000,22000,39000,65000],construction_worker:[8000,13000,20000,32000],factory_worker:[7500,12000,18500,29000],
+    doctor:[46000,86000,155000,265000],nurse:[16000,28000,48000,78000],pharmacist:[24000,42000,75000,126000],dentist:[38000,72000,130000,220000],
+    teacher:[14000,24000,40000,65000],
+    chef:[12000,22000,39000,65000],hotel_manager:[25000,50000,90000,152000],waiter:[8000,13000,20000,31000],customer_service:[11000,19000,30000,48000],driver:[10000,15000,22000,32000],security_guard:[9500,14000,21000,31000],cleaner:[7000,11000,17000,26000]
+  }},
+  AU:{n:'Australia',c:'AUD',s:'A$',d:{
+    software_engineer:[7000,10000,14000,19000],data_analyst:[6000,8700,12000,16500],uiux_designer:[5700,8300,11500,16000],cybersecurity:[7200,10500,14500,20000],network_engineer:[6000,8800,12200,16800],video_editor:[4400,6500,9200,12800],content_creator:[3900,5800,8500,12000],graphic_designer:[4400,6200,8700,12000],photographer:[3900,5800,8200,11500],
+    accountant:[5200,7500,10500,14500],project_manager:[7700,11000,15500,21500],marketing:[5000,7200,10000,14000],sales:[5000,7200,10000,14200],hr:[5500,7900,11000,15500],admin:[4200,5700,7900,11000],data_entry:[3800,5200,7200,10000],receptionist:[4200,5700,7800,10800],
+    engineer_civil:[6600,9500,13500,18500],engineer_mechanical:[6500,9300,13200,18200],electrician:[5600,7600,10500,14500],plumber:[5700,7800,10900,15200],welder:[4700,6500,9000,12500],carpenter:[4700,6400,8800,12200],construction_worker:[4300,5800,7900,11000],factory_worker:[4200,5500,7500,10300],
+    doctor:[11000,16000,22000,32000],nurse:[6200,8000,10500,14000],pharmacist:[7800,10800,14800,20500],dentist:[10000,14500,20000,28500],
+    teacher:[6200,7800,10000,13000],
+    chef:[4200,6000,8500,12000],hotel_manager:[6200,8900,12700,17800],waiter:[3600,4500,5900,7900],customer_service:[3900,5100,7000,9600],driver:[4800,5800,7200,9600],security_guard:[4200,5500,7200,9900],cleaner:[3900,4900,6400,8600]
+  }},
+  NZ:{n:'New Zealand',c:'NZD',s:'NZ$',d:{
+    software_engineer:[5800,8500,12000,16500],data_analyst:[5000,7200,10200,14200],uiux_designer:[4700,6900,9700,13500],cybersecurity:[6000,8800,12500,17500],network_engineer:[5000,7300,10300,14400],video_editor:[3700,5500,7900,11000],content_creator:[3300,4900,7200,10200],graphic_designer:[3700,5300,7500,10500],photographer:[3300,4900,7000,9900],
+    accountant:[4500,6500,9200,12800],project_manager:[6500,9500,13500,19000],marketing:[4200,6200,8800,12400],sales:[4200,6200,8800,12600],hr:[4600,6700,9500,13400],admin:[3600,4900,6800,9500],data_entry:[3300,4500,6200,8700],receptionist:[3600,4900,6700,9400],
+    engineer_civil:[5600,8000,11400,16000],engineer_mechanical:[5500,7900,11200,15700],electrician:[4800,6500,9000,12600],plumber:[4900,6700,9400,13200],welder:[4000,5700,7900,11100],carpenter:[4000,5500,7700,10800],construction_worker:[3700,5000,6900,9700],factory_worker:[3600,4800,6600,9100],
+    doctor:[9500,14000,20000,29000],nurse:[5400,6900,9000,12000],pharmacist:[6800,9400,13000,18000],dentist:[8800,12800,18000,25500],
+    teacher:[5300,6700,8700,11500],
+    chef:[3600,5200,7500,10700],hotel_manager:[5300,7700,11000,15600],waiter:[3100,3900,5200,7100],customer_service:[3300,4400,6000,8400],driver:[4100,5000,6300,8500],security_guard:[3600,4700,6300,8700],cleaner:[3400,4300,5700,7700]
+  }},
+  SG:{n:'Singapore',c:'SGD',s:'S$',d:{
+    software_engineer:[5000,7800,11500,16000],data_analyst:[4200,6500,9500,13500],uiux_designer:[4000,6200,9000,12800],cybersecurity:[5300,8200,12000,17000],network_engineer:[4200,6600,9700,13700],video_editor:[3100,4900,7200,10200],content_creator:[2800,4400,6600,9500],graphic_designer:[3100,4500,6600,9300],photographer:[2800,4300,6300,9000],
+    accountant:[3900,5800,8500,12000],project_manager:[5600,8500,12500,18000],marketing:[3600,5400,7900,11200],sales:[3600,5400,7900,11400],hr:[3900,5800,8500,12000],admin:[2800,3900,5600,7800],data_entry:[2500,3500,5000,7000],receptionist:[2800,3900,5500,7700],
+    engineer_civil:[4800,7000,10200,14500],engineer_mechanical:[4700,6800,10000,14200],electrician:[3200,4600,6600,9300],plumber:[3000,4400,6300,9000],welder:[2900,4200,6000,8600],carpenter:[2900,4100,5900,8300],construction_worker:[2300,3300,4700,6700],factory_worker:[2200,3100,4400,6300],
+    doctor:[8000,12000,17500,25000],nurse:[4000,5200,6900,9200],pharmacist:[5200,7200,9900,14000],dentist:[7500,11000,16000,23000],
+    teacher:[4000,5300,7000,9500],
+    chef:[3000,4400,6400,9100],hotel_manager:[4700,6900,10100,14500],waiter:[2300,3000,4100,5700],customer_service:[2800,3800,5400,7600],driver:[3200,3900,4900,6600],security_guard:[2800,3700,5000,7000],cleaner:[2100,2800,3900,5400]
+  }},
+  JP:{n:'Japan',c:'JPY',s:'¥',d:{
+    software_engineer:[300000,440000,620000,860000],data_analyst:[270000,390000,560000,780000],uiux_designer:[260000,375000,535000,745000],cybersecurity:[325000,475000,670000,940000],network_engineer:[270000,395000,565000,788000],video_editor:[215000,320000,455000,635000],content_creator:[195000,295000,435000,615000],graphic_designer:[215000,305000,425000,590000],photographer:[195000,290000,415000,580000],
+    accountant:[248000,360000,515000,718000],project_manager:[345000,505000,710000,995000],marketing:[238000,338000,475000,665000],sales:[238000,338000,475000,665000],hr:[248000,358000,513000,715000],admin:[205000,273000,375000,508000],data_entry:[193000,255000,348000,465000],receptionist:[205000,273000,373000,505000],
+    engineer_civil:[300000,440000,620000,860000],engineer_mechanical:[295000,430000,610000,845000],electrician:[248000,345000,468000,635000],plumber:[238000,333000,453000,618000],welder:[228000,320000,435000,595000],carpenter:[228000,315000,428000,580000],construction_worker:[210000,288000,390000,530000],factory_worker:[205000,272000,362000,480000],
+    doctor:[650000,980000,1420000,2100000],nurse:[270000,348000,445000,580000],pharmacist:[348000,470000,638000,865000],dentist:[545000,790000,1100000,1560000],
+    teacher:[268000,345000,432000,565000],
+    chef:[215000,305000,428000,600000],hotel_manager:[300000,438000,620000,870000],waiter:[188000,238000,308000,408000],customer_service:[195000,258000,338000,450000],driver:[228000,283000,350000,438000],security_guard:[205000,265000,345000,455000],cleaner:[188000,238000,305000,400000]
+  }},
+  PH:{n:'Philippines',c:'PHP',s:'₱',d:{
+    software_engineer:[28000,52000,88000,145000],data_analyst:[23000,42000,72000,118000],uiux_designer:[21000,39000,67000,110000],cybersecurity:[30000,56000,95000,158000],network_engineer:[23000,43000,74000,122000],video_editor:[16000,29000,51000,84000],content_creator:[14000,26000,46000,78000],graphic_designer:[16000,28000,48000,79000],photographer:[14000,25000,44000,73000],
+    accountant:[19000,34000,58000,96000],project_manager:[33000,60000,102000,168000],marketing:[19000,34000,58000,96000],sales:[17000,30000,51000,84000],hr:[19000,35000,60000,99000],admin:[14000,22000,36000,57000],data_entry:[13000,19000,31000,49000],receptionist:[14000,22000,36000,57000],
+    engineer_civil:[26000,48000,82000,135000],engineer_mechanical:[25000,46000,78000,128000],electrician:[17000,28000,48000,79000],plumber:[15000,25000,43000,70000],welder:[16000,27000,46000,76000],carpenter:[15000,25000,43000,70000],construction_worker:[11000,17000,27000,42000],factory_worker:[10500,16000,25000,38000],
+    doctor:[35000,65000,112000,192000],nurse:[18000,27000,42000,68000],pharmacist:[24000,42000,72000,118000],dentist:[30000,56000,98000,164000],
+    teacher:[18000,27000,41000,66000],
+    chef:[15000,26000,45000,74000],hotel_manager:[26000,48000,82000,135000],waiter:[11000,16000,25000,38000],customer_service:[17000,25000,40000,63000],driver:[14000,18000,26000,38000],security_guard:[13000,18000,28000,42000],cleaner:[11000,16000,24000,36000]
+  }},
+  NG:{n:'Nigeria',c:'NGN',s:'₦',d:{
+    software_engineer:[220000,450000,800000,1400000],data_analyst:[180000,360000,640000,1100000],uiux_designer:[170000,340000,610000,1060000],cybersecurity:[240000,490000,870000,1530000],network_engineer:[185000,375000,665000,1150000],video_editor:[115000,230000,415000,725000],content_creator:[100000,205000,385000,680000],graphic_designer:[115000,220000,390000,675000],photographer:[105000,205000,365000,635000],
+    accountant:[135000,270000,480000,830000],project_manager:[270000,525000,930000,1620000],marketing:[135000,270000,480000,830000],sales:[125000,245000,435000,755000],hr:[135000,275000,490000,850000],admin:[90000,150000,245000,390000],data_entry:[80000,132000,218000,345000],receptionist:[90000,150000,245000,390000],
+    engineer_civil:[205000,415000,740000,1285000],engineer_mechanical:[198000,398000,710000,1230000],electrician:[125000,245000,435000,725000],plumber:[110000,215000,385000,640000],welder:[125000,245000,435000,725000],carpenter:[110000,215000,385000,640000],construction_worker:[80000,135000,225000,360000],factory_worker:[75000,125000,205000,325000],
+    doctor:[345000,625000,1115000,1950000],nurse:[138000,235000,395000,640000],pharmacist:[218000,395000,690000,1165000],dentist:[300000,558000,1005000,1760000],
+    teacher:[115000,198000,325000,505000],
+    chef:[105000,195000,345000,580000],hotel_manager:[208000,398000,710000,1225000],waiter:[70000,112000,185000,290000],customer_service:[105000,175000,295000,475000],driver:[92000,130000,192000,278000],security_guard:[82000,122000,188000,285000],cleaner:[64000,100000,158000,238000]
+  }},
+  ZA:{n:'South Africa',c:'ZAR',s:'R',d:{
+    software_engineer:[33000,56000,85000,125000],data_analyst:[28000,47000,72000,106000],uiux_designer:[27000,45000,68000,101000],cybersecurity:[35000,60000,92000,136000],network_engineer:[28000,48000,73000,108000],video_editor:[18000,31000,48000,71000],content_creator:[16000,28000,44000,66000],graphic_designer:[18000,30000,47000,69000],photographer:[16000,28000,43000,65000],
+    accountant:[22000,38000,58000,86000],project_manager:[39000,65000,100000,148000],marketing:[20000,34000,53000,79000],sales:[20000,34000,53000,79000],hr:[22000,38000,58000,86000],admin:[15000,22000,34000,51000],data_entry:[13000,20000,31000,46000],receptionist:[15000,22000,34000,51000],
+    engineer_civil:[31000,52000,80000,120000],engineer_mechanical:[30000,50000,77000,115000],electrician:[20000,32000,50000,75000],plumber:[19000,31000,48000,72000],welder:[18000,29000,45000,68000],carpenter:[17000,28000,44000,66000],construction_worker:[14000,21000,33000,50000],factory_worker:[13000,20000,31000,47000],
+    doctor:[45000,73000,114000,176000],nurse:[23000,35000,52000,78000],pharmacist:[32000,51000,78000,118000],dentist:[40000,66000,104000,162000],
+    teacher:[21000,30000,45000,65000],
+    chef:[16000,26000,40000,61000],hotel_manager:[25000,42000,66000,100000],waiter:[12000,17000,26000,39000],customer_service:[14000,21000,33000,50000],driver:[14000,19000,27000,38000],security_guard:[13000,19000,28000,42000],cleaner:[11000,16000,24000,36000]
+  }},
+  KE:{n:'Kenya',c:'KES',s:'KSh',d:{
+    software_engineer:[88000,168000,295000,485000],data_analyst:[72000,136000,238000,392000],uiux_designer:[68000,130000,228000,375000],cybersecurity:[96000,182000,320000,528000],network_engineer:[74000,140000,245000,404000],video_editor:[47000,88000,156000,258000],content_creator:[40000,80000,142000,248000],graphic_designer:[45000,82000,145000,238000],photographer:[40000,76000,135000,222000],
+    accountant:[56000,108000,188000,310000],project_manager:[108000,202000,352000,582000],marketing:[56000,108000,188000,310000],sales:[50000,96000,168000,277000],hr:[58000,110000,192000,318000],admin:[34000,56000,90000,142000],data_entry:[30000,49000,79000,124000],receptionist:[34000,56000,90000,142000],
+    engineer_civil:[82000,155000,272000,450000],engineer_mechanical:[79000,148000,260000,430000],electrician:[48000,90000,158000,262000],plumber:[42000,79000,140000,232000],welder:[48000,90000,158000,262000],carpenter:[42000,79000,140000,232000],construction_worker:[27000,44000,72000,112000],factory_worker:[25000,41000,66000,104000],
+    doctor:[138000,255000,452000,776000],nurse:[58000,94000,155000,245000],pharmacist:[88000,158000,270000,450000],dentist:[118000,220000,398000,690000],
+    teacher:[52000,82000,130000,202000],
+    chef:[42000,78000,138000,228000],hotel_manager:[80000,152000,266000,440000],waiter:[25000,40000,65000,102000],customer_service:[40000,68000,112000,178000],driver:[35000,50000,72000,106000],security_guard:[30000,48000,74000,114000],cleaner:[23000,37000,60000,92000]
+  }}
 };
 
-function setCurrency(c, btn) {
-  currency = c;
-  document.querySelectorAll('.currency-toggle button').forEach(b => b.classList.remove('active'));
+const roleLabels={software_engineer:'Software Engineer',data_analyst:'Data Analyst',uiux_designer:'UI/UX Designer',cybersecurity:'Cybersecurity Analyst',network_engineer:'Network Engineer',video_editor:'Video Editor',content_creator:'Content Creator',graphic_designer:'Graphic Designer',photographer:'Photographer',accountant:'Accountant',project_manager:'Project Manager',marketing:'Marketing Specialist',sales:'Sales Executive',hr:'HR Specialist',admin:'Admin Assistant',data_entry:'Data Entry Operator',receptionist:'Receptionist',engineer_civil:'Civil Engineer',engineer_mechanical:'Mechanical Engineer',electrician:'Electrician',plumber:'Plumber',welder:'Welder',carpenter:'Carpenter',construction_worker:'Construction Worker',factory_worker:'Factory Worker',doctor:'Doctor',nurse:'Nurse',pharmacist:'Pharmacist',dentist:'Dentist',teacher:'Teacher',chef:'Chef / Cook',hotel_manager:'Hotel Manager',waiter:'Waiter / Server',customer_service:'Customer Service',driver:'Driver',security_guard:'Security Guard',cleaner:'Cleaner'};
+
+let cur='SA';
+
+function setCountry(code){
+  cur=code;
+  const c=C[code];
+  document.querySelectorAll('.curr-sym').forEach(el=>el.textContent=c.c);
+  document.querySelectorAll('.result').forEach(r=>r.classList.remove('show'));
+}
+
+function fmt(n){
+  const c=C[cur];
+  if(n>=1000000)return c.s+(n/1000000).toFixed(1)+'M';
+  return c.s+Math.round(n).toLocaleString();
+}
+
+function showTab(tab,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
   btn.classList.add('active');
-  document.querySelectorAll('.curr-label').forEach(el => el.textContent = c);
-  // Hide all results on switch
-  document.querySelectorAll('.result').forEach(r => r.classList.remove('show'));
 }
 
-function fmt(n) {
-  const converted = n * rates[currency];
-  return symbols[currency] + Math.round(converted).toLocaleString();
-}
-
-function showTab(tab, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + tab).classList.add('active');
-  btn.classList.add('active');
-}
-
-// EMI
-function calcEMI() {
-  const P = parseFloat(document.getElementById('emi-amount').value);
-  const r = parseFloat(document.getElementById('emi-rate').value) / 100 / 12;
-  const n = parseInt(document.getElementById('emi-months').value);
-  if (!P || !r || !n) return alert('Please fill all fields.');
-  const emi = P * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
-  const total = emi * n;
-  const interest = total - P;
-  document.getElementById('emi-monthly').textContent = fmt(emi);
-  document.getElementById('emi-total').textContent = fmt(total);
-  document.getElementById('emi-interest').textContent = fmt(interest);
-  document.getElementById('emi-principal').textContent = fmt(P);
-  const pct = (interest/P*100).toFixed(1);
-  const v = document.getElementById('emi-verdict');
-  if (pct < 20) {
-    v.className = 'verdict good';
-    v.textContent = `✅ Good deal! You're paying ${pct}% extra as interest — that's below average. Your monthly EMI is manageable.`;
-  } else if (pct < 50) {
-    v.className = 'verdict';
-    v.textContent = `⚠️ You'll pay ${pct}% extra as interest. Consider a shorter term or higher down payment to reduce total cost.`;
-  } else {
-    v.className = 'verdict warn';
-    v.textContent = `🔴 High interest! You'll pay ${pct}% extra. Try negotiating a lower rate or reducing the loan amount.`;
-  }
+function calcEMI(){
+  const P=parseFloat(document.getElementById('emi-amount').value);
+  const r=parseFloat(document.getElementById('emi-rate').value)/100/12;
+  const n=parseInt(document.getElementById('emi-months').value);
+  if(!P||!r||!n)return alert('Please fill all fields.');
+  const emi=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  const total=emi*n;const interest=total-P;
+  document.getElementById('emi-monthly').textContent=fmt(emi);
+  document.getElementById('emi-total').textContent=fmt(total);
+  document.getElementById('emi-interest').textContent=fmt(interest);
+  document.getElementById('emi-principal').textContent=fmt(P);
+  const pct=(interest/P*100).toFixed(1);
+  const v=document.getElementById('emi-verdict');
+  if(pct<20){v.className='verdict good';v.textContent=`✅ Good deal! You're paying ${pct}% extra as interest — below average.`;}
+  else if(pct<50){v.className='verdict';v.textContent=`⚠️ You'll pay ${pct}% extra as interest. Consider a shorter term or higher down payment.`;}
+  else{v.className='verdict warn';v.textContent=`🔴 High interest! You'll pay ${pct}% extra. Try negotiating a lower rate.`;}
   document.getElementById('emi-result').classList.add('show');
 }
 
-// SALARY
-function calcSalary() {
-  const role = document.getElementById('sal-role').value;
-  const exp = parseInt(document.getElementById('sal-exp').value);
-  const current = parseFloat(document.getElementById('sal-current').value);
-  if (!role || !current) return alert('Please fill all fields.');
-  const expIdx = [0,2,5,10].indexOf(exp);
-  const d = salaryData[role];
-  const avg = d.base[expIdx];
-  const low = Math.round(avg * 0.8);
-  const high = Math.round(avg * 1.3);
-  const diff = current - avg;
-  document.getElementById('sal-avg').textContent = fmt(avg);
-  document.getElementById('sal-range').textContent = fmt(low) + ' – ' + fmt(high);
-  document.getElementById('sal-yours').textContent = fmt(current);
-  document.getElementById('sal-diff').textContent = (diff >= 0 ? '+' : '') + fmt(diff);
-  const v = document.getElementById('sal-verdict');
-  const pct = Math.abs(Math.round(diff/avg*100));
-  if (diff >= 0) {
-    v.className = 'verdict good';
-    v.textContent = `✅ You're earning ${pct}% above market average for a ${d.label} with your experience. Great position to negotiate even higher!`;
-  } else if (pct < 15) {
-    v.className = 'verdict';
-    v.textContent = `⚠️ You're ${pct}% below market average. You have a solid case to ask for a raise — market says you deserve ${fmt(avg)}/month.`;
-  } else {
-    v.className = 'verdict warn';
-    v.textContent = `🔴 You're significantly underpaid — ${pct}% below market. A ${d.label} with your experience earns around ${fmt(avg)}/month. Time to negotiate or explore new opportunities.`;
-  }
+function calcSalary(){
+  const role=document.getElementById('sal-role').value;
+  const exp=parseInt(document.getElementById('sal-exp').value);
+  const current=parseFloat(document.getElementById('sal-current').value);
+  if(!role||!current)return alert('Please fill all fields.');
+  const expIdx=[0,2,5,10].indexOf(exp);
+  const c=C[cur];const d=c.d[role];
+  const avg=d[expIdx];const low=Math.round(avg*0.8);const high=Math.round(avg*1.3);
+  const diff=current-avg;
+  document.getElementById('sal-avg').textContent=fmt(avg);
+  document.getElementById('sal-range').textContent=fmt(low)+' – '+fmt(high);
+  document.getElementById('sal-yours').textContent=fmt(current);
+  document.getElementById('sal-diff').textContent=(diff>=0?'+':'')+fmt(Math.abs(diff));
+  const v=document.getElementById('sal-verdict');
+  const pct=Math.abs(Math.round(diff/avg*100));
+  const rLabel=roleLabels[role];
+  if(diff>=0){v.className='verdict good';v.textContent=`✅ You're earning ${pct}% above market average for a ${rLabel} in ${c.n}. Great position to negotiate even higher!`;}
+  else if(pct<15){v.className='verdict';v.textContent=`⚠️ You're ${pct}% below market in ${c.n}. A solid case to ask for a raise — market average is ${fmt(avg)}/month.`;}
+  else{v.className='verdict warn';v.textContent=`🔴 Significantly underpaid — ${pct}% below market in ${c.n}. A ${rLabel} with your experience earns around ${fmt(avg)}/month. Time to negotiate or explore new opportunities.`;}
   document.getElementById('salary-result').classList.add('show');
 }
 
-// FREELANCE
-function calcFreelance() {
-  const income = parseFloat(document.getElementById('fl-income').value);
-  const expenses = parseFloat(document.getElementById('fl-expenses').value) || 0;
-  const hours = parseFloat(document.getElementById('fl-hours').value);
-  const weeks = parseInt(document.getElementById('fl-weeks').value);
-  if (!income || !hours) return alert('Please fill all fields.');
-  const needed = income + expenses;
-  const totalHours = hours * weeks;
-  const minRate = needed / totalHours;
-  const recommended = minRate * 1.3;
-  document.getElementById('fl-hourly').textContent = fmt(minRate) + '/hr';
-  document.getElementById('fl-recommended').textContent = fmt(recommended) + '/hr';
-  document.getElementById('fl-daily').textContent = fmt(recommended * 8);
-  document.getElementById('fl-project').textContent = fmt(recommended * 40);
-  const v = document.getElementById('fl-verdict');
-  v.className = 'verdict good';
-  v.textContent = `💡 To earn ${fmt(income)}/month working ${totalHours} hours, charge at least ${fmt(minRate)}/hr. Add 30% buffer for taxes, slow months & revisions — so ${fmt(recommended)}/hr is your real target rate.`;
+function calcFreelance(){
+  const income=parseFloat(document.getElementById('fl-income').value);
+  const expenses=parseFloat(document.getElementById('fl-expenses').value)||0;
+  const hours=parseFloat(document.getElementById('fl-hours').value);
+  const weeks=parseInt(document.getElementById('fl-weeks').value);
+  if(!income||!hours)return alert('Please fill all fields.');
+  const needed=income+expenses;const totalHours=hours*weeks;
+  const minRate=needed/totalHours;const recommended=minRate*1.3;
+  document.getElementById('fl-hourly').textContent=fmt(minRate)+'/hr';
+  document.getElementById('fl-recommended').textContent=fmt(recommended)+'/hr';
+  document.getElementById('fl-daily').textContent=fmt(recommended*8);
+  document.getElementById('fl-project').textContent=fmt(recommended*40);
+  const v=document.getElementById('fl-verdict');
+  v.className='verdict good';
+  v.textContent=`💡 To earn ${fmt(income)}/month working ${totalHours} hrs, charge at least ${fmt(minRate)}/hr. Add 30% buffer for taxes & slow months — so ${fmt(recommended)}/hr is your real target rate.`;
   document.getElementById('freelance-result').classList.add('show');
 }
 
-// SHARE
-function shareResult(type) {
-  const text = `I just used FinchHub's free ${type} Calculator! Check yours at finchub.vercel.app 💰`;
-  if (navigator.share) {
-    navigator.share({ title: 'FinchHub', text, url: 'https://finchub.vercel.app' });
-  } else {
-    navigator.clipboard.writeText(text).then(() => alert('Result copied! Share it anywhere 🚀'));
-  }
+function shareResult(type){
+  const c=C[cur];
+  const text=`I just used FinchHub's free ${type} Calculator for ${c.n}! Check yours at finchub.vercel.app 💰`;
+  if(navigator.share){navigator.share({title:'FinchHub',text,url:'https://finchub.vercel.app'});}
+  else{navigator.clipboard.writeText(text).then(()=>alert('Copied! Share anywhere 🚀'));}
 }
 </script>
 </body>
