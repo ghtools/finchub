@@ -1,60 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinchHub – Free Financial Calculators</title>
+    <meta name="description" content="Free EMI, Salary & Freelance calculators for 30+ countries">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #0d0f14;
+            color: #e8eaf0;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+        nav {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(13,15,20,0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #242830;
+        }
+        .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: #4f8ef7; }
+        .logo span { color: #e8eaf0; }
+        .hero { text-align: center; padding: 40px 20px 30px; }
+        .hero-badge { background: rgba(79,142,247,0.15); color: #4f8ef7; padding: 6px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; display: inline-block; margin-bottom: 12px; }
+        h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.1rem; line-height: 1.1; margin-bottom: 12px; }
+        .tabs { display: flex; gap: 8px; padding: 0 16px; margin-bottom: 20px; }
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: #161920;
+            border: 1px solid #242830;
+            color: #7a7f8e;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            background: #4f8ef7;
+            color: white;
+            border-color: #4f8ef7;
+        }
+        .card {
+            background: #161920;
+            margin: 0 16px 20px;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #242830;
+        }
+        .field { margin-bottom: 16px; }
+        .field label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: #7a7f8e; }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: #0d0f14;
+            border: 1px solid #242830;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+        .calc-btn {
+            width: 100%;
+            padding: 14px;
+            background: #4f8ef7;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-top: 10px;
+        }
+        footer { text-align: center; padding: 30px 20px; color: #666; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Finch<span>Hub</span></div>
+    <div>🇸🇦 Saudi Arabia</div>
+</nav>
+
+<section class="hero">
+    <div class="hero-badge">100% FREE • NO SIGNUP</div>
+    <h1>Smart tools for<br><span style="color:#4f8ef7">smarter money</span> decisions</h1>
+    <p>EMI, Salary & Freelance calculators for Gulf & worldwide.</p>
+</section>
+
+<div class="tabs">
+    <button class="tab-btn active" onclick="showTab(0)">EMI</button>
+    <button class="tab-btn" onclick="showTab(1)">Salary</button>
+    <button class="tab-btn" onclick="showTab(2)">Freelance</button>
+</div>
+
+<div class="card" id="panel0">
+    <h2>EMI Calculator</h2>
+    <div class="field"><label>Loan Amount (SAR)</label><input type="number" id="amount" placeholder="50000"></div>
+    <div class="field"><label>Interest Rate (% per year)</label><input type="number" id="rate" placeholder="6.5" step="0.1"></div>
+    <div class="field"><label>Months</label><input type="number" id="months" placeholder="36"></div>
+    <button class="calc-btn" onclick="calcEMI()">Calculate EMI</button>
+    <div id="emiResult" style="margin-top:15px; padding:15px; background:#0d0f14; border-radius:12px; display:none;"></div>
+</div>
+
+<div class="card" id="panel1" style="display:none">
+    <h2>Salary Checker</h2>
+    <p>Coming soon...</p>
+</div>
+
+<div class="card" id="panel2" style="display:none">
+    <h2>Freelance Rate</h2>
+    <p>Coming soon...</p>
+</div>
+
+<footer>
+    © 2026 FinchHub • Free forever
+</footer>
+
 <script>
-// Tab Switching
-function showTab(tab, el) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + tab).classList.add('active');
-  el.classList.add('active');
+function showTab(n) {
+    document.querySelectorAll('.card').forEach((c,i) => {
+        c.style.display = (i === n) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.tab-btn').forEach((b,i) => {
+        b.classList.toggle('active', i === n);
+    });
 }
 
-// Country Change
-function setCountry(code) {
-  // Future mein currency change kar sakte hain
-  console.log('Country changed:', code);
-}
-
-// EMI Calculator
 function calcEMI() {
-  const amount = parseFloat(document.getElementById('emi-amount').value);
-  const rate = parseFloat(document.getElementById('emi-rate').value) / 100 / 12;
-  const months = parseFloat(document.getElementById('emi-months').value);
+    const amount = parseFloat(document.getElementById('amount').value);
+    const rate = parseFloat(document.getElementById('rate').value) / 100 / 12;
+    const months = parseFloat(document.getElementById('months').value);
 
-  if (!amount || !rate || !months) {
-    alert("Please fill all fields");
-    return;
-  }
+    if (!amount || !rate || !months) {
+        alert("Sab fields bharo");
+        return;
+    }
 
-  const emi = (amount * rate * Math.pow(1 + rate, months)) / (Math.pow(1 + rate, months) - 1);
-  const total = emi * months;
-  const interest = total - amount;
+    const emi = amount * rate * Math.pow(1+rate, months) / (Math.pow(1+rate, months) - 1);
+    const total = emi * months;
 
-  document.getElementById('emi-result').innerHTML = `
-    <div style="padding:15px;background:#1a1d24;border-radius:12px">
-      <div><strong>Monthly EMI:</strong> ${emi.toFixed(2)} SAR</div>
-      <div><strong>Total Payment:</strong> ${total.toFixed(2)} SAR</div>
-      <div><strong>Total Interest:</strong> ${interest.toFixed(2)} SAR</div>
-    </div>
-  `;
-  document.getElementById('emi-result').style.display = 'block';
-}
-
-// Salary Checker (basic)
-function calcSalary() {
-  alert("Salary checker coming soon! (Data add kar rahe hain)");
-}
-
-// Freelance
-function calcFreelance() {
-  alert("Freelance calculator coming soon!");
-}
-
-// Share function
-function shareResult(type) {
-  const text = `I used FinchHub ${type} Calculator! Try it: https://finchub.vercel.app`;
-  if (navigator.share) {
-    navigator.share({title: 'FinchHub', text});
-  } else {
-    navigator.clipboard.writeText(text).then(() => alert('Link copied!'));
-  }
+    document.getElementById('emiResult').innerHTML = `
+        <strong>Monthly EMI: ${emi.toFixed(0)} SAR</strong><br>
+        Total Payment: ${total.toFixed(0)} SAR
+    `;
+    document.getElementById('emiResult').style.display = 'block';
 }
 </script>
+
+</body>
+</html>
