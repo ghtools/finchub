@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FinchHub – Free Financial Calculators</title>
+<title>Finchub – Free Financial Calculators</title>
 <meta name="description" content="Free financial calculators for EMI, Salary Check & Freelance Rate. Supports 30+ countries worldwide.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -11,9 +11,9 @@
   :root{--bg:#0d0f14;--surface:#161920;--border:#242830;--accent:#4f8ef7;--accent2:#22d3a5;--accent3:#f7924f;--text:#e8eaf0;--muted:#7a7f8e;--radius:16px}
   body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
   nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(13,15,20,0.95);backdrop-filter:blur(12px);z-index:9999}
-  .logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--accent);text-decoration:none;cursor:pointer}
-  .logo span{color:var(--text)}
-  .country-select-nav{background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:6px 10px;color:var(--text);font-size:0.78rem;font-weight:600;font-family:'Inter',sans-serif;outline:none;cursor:pointer;max-width:160px}
+  .logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--accent);text-decoration:none;cursor:pointer;letter-spacing:normal;white-space:nowrap}
+  .logo span{color:var(--text);letter-spacing:normal}
+  .country-select-nav{background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:6px 10px;color:var(--text);font-size:0.78rem;font-weight:600;font-family:'Inter','Segoe UI Emoji','Noto Color Emoji','Apple Color Emoji',sans-serif;outline:none;cursor:pointer;max-width:160px}
   .country-select-nav option{background:var(--bg)}
   .hero{text-align:center;padding:32px 16px 24px}
   .hero-badge{display:inline-block;background:rgba(79,142,247,0.12);color:var(--accent);font-size:0.72rem;font-weight:600;padding:5px 12px;border-radius:100px;margin-bottom:14px;letter-spacing:0.5px;text-transform:uppercase}
@@ -54,7 +54,7 @@
 </head>
 <body>
 <nav>
-  <a class="logo" href="https://finchub.vercel.app" target="_blank">Finch<span>Hub</span></a>
+  <a class="logo" href="https://finchub.vercel.app" target="_blank">Finc<span>hub</span></a>
   <select class="country-select-nav" id="countrySelect" onchange="setCountry(this.value)">
     <optgroup label="🌍 Middle East">
       <option value="SA">🇸🇦 Saudi Arabia</option>
@@ -261,7 +261,8 @@
 </div>
 
 <footer>
-  <p>© 2026 FinchHub · Free forever · Salary data updated 2026</p>
+  <p>© 2026 Finchub · Free forever · Salary data updated 2026</p>
+  <p style="margin-top:6px">Made with ❤️ by GH Jamali</p>
   <p style="margin-top:8px"><a href="#">Privacy Policy</a> · <a href="#">About</a></p>
 </footer>
 
@@ -611,8 +612,8 @@ function calcFreelance(){
 
 function shareResult(type){
   const c=C[cur];
-  const text=`I just used FinchHub's free ${type} Calculator for ${c.n}! Check yours at finchub.vercel.app 💰`;
-  if(navigator.share){navigator.share({title:'FinchHub',text,url:'https://finchub.vercel.app'});}
+  const text=`I just used Finchub's free ${type} Calculator for ${c.n}! Check yours at finchub.vercel.app 💰`;
+  if(navigator.share){navigator.share({title:'Finchub',text,url:'https://finchub.vercel.app'});}
   else{navigator.clipboard.writeText(text).then(()=>alert('Copied! Share anywhere 🚀'));}
 }
 </script>
@@ -636,39 +637,73 @@ function shareResult(type){
 
 <!-- Adsterra Native Banner - after hero -->
 <script>
+function loadAdScript(container, opts, src){
+  if(opts){
+    var s1=document.createElement('script');
+    s1.text='atOptions='+JSON.stringify(opts);
+    container.appendChild(s1);
+  }
+  var s2=document.createElement('script');
+  s2.src=src;
+  s2.async=true;
+  container.appendChild(s2);
+}
+
 document.addEventListener('DOMContentLoaded',function(){
-  // Insert native banner after hero section
+  // Native banner after hero
   var hero=document.querySelector('.hero');
   if(hero){
     var nb=document.createElement('div');
     nb.className='ad-container';
-    nb.innerHTML='<div class="ad-label">Advertisement</div><script async="async" data-cfasync="false" src="https://pl30126685.effectivecpmnetwork.com/1b947a615e626a8182392ba72cd86e5a/invoke.js"><\/script><div id="container-1b947a615e626a8182392ba72cd86e5a"></div>';
+    var lbl=document.createElement('div');
+    lbl.className='ad-label';
+    lbl.textContent='Advertisement';
+    nb.appendChild(lbl);
+    var nbDiv=document.createElement('div');
+    nbDiv.id='container-1b947a615e626a8182392ba72cd86e5a';
+    nb.appendChild(nbDiv);
     hero.parentNode.insertBefore(nb,hero.nextSibling);
+    var ns=document.createElement('script');
+    ns.async=true;
+    ns.setAttribute('data-cfasync','false');
+    ns.src='https://pl30126685.effectivecpmnetwork.com/1b947a615e626a8182392ba72cd86e5a/invoke.js';
+    nb.appendChild(ns);
   }
 
-  // Insert mobile banner (320x50) before footer
+  // Mobile + desktop banners before footer
   var footer=document.querySelector('footer');
   if(footer){
     var mb=document.createElement('div');
     mb.className='ad-container ad-mobile';
-    mb.innerHTML='<div class="ad-label">Advertisement</div><script>atOptions={"key":"ae14987a4c1078fa2aa4089f71f57cd6","format":"iframe","height":50,"width":320,"params":{}}<\/script><script src="https://www.highperformanceformat.com/ae14987a4c1078fa2aa4089f71f57cd6/invoke.js"><\/script>';
+    var mlbl=document.createElement('div');
+    mlbl.className='ad-label';
+    mlbl.textContent='Advertisement';
+    mb.appendChild(mlbl);
     footer.parentNode.insertBefore(mb,footer);
+    loadAdScript(mb,{key:'ae14987a4c1078fa2aa4089f71f57cd6',format:'iframe',height:50,width:320,params:{}},'https://www.highperformanceformat.com/ae14987a4c1078fa2aa4089f71f57cd6/invoke.js');
 
-    // Insert desktop banner (728x90) before footer - desktop only
     var db=document.createElement('div');
     db.className='ad-container ad-desktop';
-    db.innerHTML='<div class="ad-label">Advertisement</div><script>atOptions={"key":"de09daf09be38c92bf2756f86c4cb0fc","format":"iframe","height":90,"width":728,"params":{}}<\/script><script src="https://www.highperformanceformat.com/de09daf09be38c92bf2756f86c4cb0fc/invoke.js"><\/script>';
+    var dlbl=document.createElement('div');
+    dlbl.className='ad-label';
+    dlbl.textContent='Advertisement';
+    db.appendChild(dlbl);
     footer.parentNode.insertBefore(db,footer);
+    loadAdScript(db,{key:'de09daf09be38c92bf2756f86c4cb0fc',format:'iframe',height:90,width:728,params:{}},'https://www.highperformanceformat.com/de09daf09be38c92bf2756f86c4cb0fc/invoke.js');
   }
 
-  // Insert 300x250 banner inside result sections (after each result shows)
+  // 300x250 banner inside result sections after calculation
   var observer=new MutationObserver(function(mutations){
     mutations.forEach(function(m){
       if(m.target.classList.contains('show') && !m.target.querySelector('.ad-injected')){
         var ad=document.createElement('div');
         ad.className='ad-container ad-injected';
-        ad.innerHTML='<div class="ad-label">Advertisement</div><script>atOptions={"key":"e78aab0881fcbf7ced0fc087bb543afb","format":"iframe","height":250,"width":300,"params":{}}<\/script><script src="https://www.highperformanceformat.com/e78aab0881fcbf7ced0fc087bb543afb/invoke.js"><\/script>';
+        var alabel=document.createElement('div');
+        alabel.className='ad-label';
+        alabel.textContent='Advertisement';
+        ad.appendChild(alabel);
         m.target.appendChild(ad);
+        loadAdScript(ad,{key:'e78aab0881fcbf7ced0fc087bb543afb',format:'iframe',height:250,width:300,params:{}},'https://www.highperformanceformat.com/e78aab0881fcbf7ced0fc087bb543afb/invoke.js');
       }
     });
   });
