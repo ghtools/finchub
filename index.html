@@ -107,6 +107,8 @@
   <p>EMI, salary & freelance calculators with real data for 30+ countries worldwide.</p>
 </section>
 
+<div id="native-ad-slot"></div>
+
 <div class="tabs">
   <button class="tab-btn active" onclick="showTab('emi',this)">EMI Calculator</button>
   <button class="tab-btn" onclick="showTab('salary',this)">Salary Checker</button>
@@ -620,11 +622,7 @@ function shareResult(type){
 
 
 
-<!-- Adsterra Social Bar -->
-<style>.socialbar-wrap{position:fixed;bottom:0;left:0;right:0;z-index:1;}</style>
-<div class="socialbar-wrap">
-<script src="https://pl30126690.effectivecpmnetwork.com/81/6e/c5/816ec5661a3fd25d427f594b8a6c1210.js"></script>
-</div>
+
 
 <!-- Adsterra Ad Styles -->
 <style>
@@ -650,9 +648,9 @@ function loadAdScript(container, opts, src){
 }
 
 document.addEventListener('DOMContentLoaded',function(){
-  // Native banner after hero
-  var hero=document.querySelector('.hero');
-  if(hero){
+  // Native banner after all tools, before footer
+  var slot=document.getElementById('native-ad-slot');
+  if(slot){
     var nb=document.createElement('div');
     nb.className='ad-container';
     var lbl=document.createElement('div');
@@ -662,7 +660,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var nbDiv=document.createElement('div');
     nbDiv.id='container-1b947a615e626a8182392ba72cd86e5a';
     nb.appendChild(nbDiv);
-    hero.parentNode.insertBefore(nb,hero.nextSibling);
+    slot.appendChild(nb);
     var ns=document.createElement('script');
     ns.async=true;
     ns.setAttribute('data-cfasync','false');
