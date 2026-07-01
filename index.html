@@ -107,8 +107,6 @@
   <p>EMI, salary & freelance calculators with real data for 30+ countries worldwide.</p>
 </section>
 
-<div id="native-ad-slot"></div>
-
 <div class="tabs">
   <button class="tab-btn active" onclick="showTab('emi',this)">EMI Calculator</button>
   <button class="tab-btn" onclick="showTab('salary',this)">Salary Checker</button>
@@ -648,26 +646,6 @@ function loadAdScript(container, opts, src){
 }
 
 document.addEventListener('DOMContentLoaded',function(){
-  // Native banner after all tools, before footer
-  var slot=document.getElementById('native-ad-slot');
-  if(slot){
-    var nb=document.createElement('div');
-    nb.className='ad-container';
-    var lbl=document.createElement('div');
-    lbl.className='ad-label';
-    lbl.textContent='Advertisement';
-    nb.appendChild(lbl);
-    var nbDiv=document.createElement('div');
-    nbDiv.id='container-1b947a615e626a8182392ba72cd86e5a';
-    nb.appendChild(nbDiv);
-    slot.appendChild(nb);
-    var ns=document.createElement('script');
-    ns.async=true;
-    ns.setAttribute('data-cfasync','false');
-    ns.src='https://pl30126685.effectivecpmnetwork.com/1b947a615e626a8182392ba72cd86e5a/invoke.js';
-    nb.appendChild(ns);
-  }
-
   // Mobile + desktop banners before footer
   var footer=document.querySelector('footer');
   if(footer){
