@@ -260,6 +260,20 @@
   </div>
 </div>
 
+<!-- Mobile Banner 320x50 -->
+<div class="ad-container ad-mobile">
+<div class="ad-label">Advertisement</div>
+<script>atOptions={'key':'ae14987a4c1078fa2aa4089f71f57cd6','format':'iframe','height':50,'width':320,'params':{}}</script>
+<script src="https://www.highperformanceformat.com/ae14987a4c1078fa2aa4089f71f57cd6/invoke.js"></script>
+</div>
+
+<!-- Desktop Banner 728x90 -->
+<div class="ad-container ad-desktop">
+<div class="ad-label">Advertisement</div>
+<script>atOptions={'key':'de09daf09be38c92bf2756f86c4cb0fc','format':'iframe','height':90,'width':728,'params':{}}</script>
+<script src="https://www.highperformanceformat.com/de09daf09be38c92bf2756f86c4cb0fc/invoke.js"></script>
+</div>
+
 <footer>
   <p>© 2026 Finchub · Free forever · Salary data updated 2026</p>
   <p style="margin-top:6px">Made with ❤️ by GH Jamali</p>
@@ -646,28 +660,6 @@ function loadAdScript(container, opts, src){
 }
 
 document.addEventListener('DOMContentLoaded',function(){
-  // Mobile + desktop banners before footer
-  var footer=document.querySelector('footer');
-  if(footer){
-    var mb=document.createElement('div');
-    mb.className='ad-container ad-mobile';
-    var mlbl=document.createElement('div');
-    mlbl.className='ad-label';
-    mlbl.textContent='Advertisement';
-    mb.appendChild(mlbl);
-    footer.parentNode.insertBefore(mb,footer);
-    loadAdScript(mb,{key:'ae14987a4c1078fa2aa4089f71f57cd6',format:'iframe',height:50,width:320,params:{}},'https://www.highperformanceformat.com/ae14987a4c1078fa2aa4089f71f57cd6/invoke.js');
-
-    var db=document.createElement('div');
-    db.className='ad-container ad-desktop';
-    var dlbl=document.createElement('div');
-    dlbl.className='ad-label';
-    dlbl.textContent='Advertisement';
-    db.appendChild(dlbl);
-    footer.parentNode.insertBefore(db,footer);
-    loadAdScript(db,{key:'de09daf09be38c92bf2756f86c4cb0fc',format:'iframe',height:90,width:728,params:{}},'https://www.highperformanceformat.com/de09daf09be38c92bf2756f86c4cb0fc/invoke.js');
-  }
-
   // 300x250 banner inside result sections after calculation
   var observer=new MutationObserver(function(mutations){
     mutations.forEach(function(m){
